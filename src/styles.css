@@ -114,6 +114,10 @@
     border-color: var(--color-border);
   }
 
+  html {
+    zoom: 0.8;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
