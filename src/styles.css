@@ -115,7 +115,12 @@
   }
 
   html {
-    zoom: 0.8;
+    height: 100%;
+  }
+
+  .recharts-surface,
+  .recharts-wrapper {
+    overflow: visible !important;
   }
 
   body {

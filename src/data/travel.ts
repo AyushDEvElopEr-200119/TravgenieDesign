@@ -60,113 +60,144 @@ export const flights: Flight[] = [
     stops: "Direct",
     checkedBag: "20 kg",
     cabinBag: "7 kg",
+    price: 168,
+  },
+  {
+    id: "WY615",
+    airline: "Oman Air",
+    code: "WY",
+    depart: "16:45",
+    departCode: "MCT",
+    arrive: "18:15",
+    arriveCode: "DXB",
+    duration: "1h 30m",
+    stops: "Direct",
+    checkedBag: "25 kg",
+    cabinBag: "7 kg",
     price: 210,
   },
   {
-    id: "QR1136",
-    airline: "Qatar Airways",
-    code: "QR",
-    depart: "18:30",
+    id: "EK867",
+    airline: "Emirates",
+    code: "EK",
+    depart: "19:00",
     departCode: "MCT",
-    arrive: "20:05",
+    arrive: "20:30",
     arriveCode: "DXB",
-    duration: "1h 35m",
+    duration: "1h 30m",
     stops: "Direct",
     checkedBag: "30 kg",
     cabinBag: "7 kg",
-    price: 298,
+    price: 245,
   },
+];
+
+export const stopFilters = [
+  { name: "Direct Flights Only", price: 168 },
+  { name: "1 Stop", price: 215 },
+  { name: "2+ Stops", price: 340 },
 ];
 
 export const airlineFilters = [
   { name: "Oman Air", price: 196 },
   { name: "Emirates", price: 224 },
-  { name: "flydubai", price: 210 },
-  { name: "Qatar Airways", price: 298 },
-  { name: "IndiGo", price: 230 },
+  { name: "flydubai", price: 168 },
+  { name: "Etihad Airways", price: 280 },
 ];
 
-export const stopFilters = [
-  { name: "Direct", price: 196 },
-  { name: "1 Stop", price: 224 },
-  { name: "2+ Stops", price: 298 },
+export const flightPolicyFilters = [
+  { id: "all", label: "All Flights", count: 48 },
+  { id: "within", label: "Within Policy Only", count: 34 },
+  { id: "preferred", label: "Preferred Airlines", count: 21 },
+  { id: "direct", label: "Direct Only", count: 18 },
+];
+
+export const hotelPolicyFilters = [
+  { id: "all", label: "All Hotels", count: 124 },
+  { id: "within", label: "Within Policy (< USD 300)", count: 96 },
+  { id: "preferred", label: "Company Preferred", count: 42 },
+];
+
+export const starFilters = [
+  { stars: 5, label: "5 Stars", count: 38 },
+  { stars: 4, label: "4 Stars", count: 54 },
+  { stars: 3, label: "3 Stars", count: 28 },
 ];
 
 export type Hotel = {
   id: string;
   name: string;
-  stars: number;
   area: string;
-  distance: string;
-  amenities: string[];
+  city: string;
+  stars: number;
+  rating: number;
+  reviews: number;
   price: number;
+  preferred?: boolean;
   policy: PolicyKind;
   image: string;
+  amenities: string[];
 };
 
 export const hotels: Hotel[] = [
   {
-    id: "rove",
+    id: "rove-downtown",
     name: "Rove Downtown Dubai",
-    stars: 4,
     area: "Downtown Dubai",
-    distance: "2.3 km from City Centre",
-    amenities: ["Free Wi-Fi", "Breakfast", "Business Centre", "Gym"],
-    price: 82,
+    city: "Dubai",
+    stars: 4,
+    rating: 8.8,
+    reviews: 1420,
+    price: 246,
+    preferred: true,
     policy: "within",
     image: hotelDowntown,
+    amenities: ["Free WiFi", "Breakfast Included", "Gym", "Pool"],
   },
   {
-    id: "hyatt",
-    name: "Hyatt Regency Dubai Creek Heights",
-    stars: 4,
-    area: "Dubai Creek",
-    distance: "4.1 km from City Centre",
-    amenities: ["Free Wi-Fi", "Breakfast", "Airport Shuttle", "Pool"],
-    price: 128,
+    id: "hyatt-regency",
+    name: "Hyatt Regency Dubai Creek",
+    area: "Deira / Creek",
+    city: "Dubai",
+    stars: 5,
+    rating: 8.6,
+    reviews: 980,
+    price: 285,
+    preferred: true,
     policy: "within",
     image: hotelCreek,
+    amenities: ["Free WiFi", "Meeting Facilities", "Airport Shuttle", "Spa"],
   },
   {
-    id: "address",
-    name: "Address Downtown",
-    stars: 5,
-    area: "Downtown Dubai",
-    distance: "1.2 km from City Centre",
-    amenities: ["Free Wi-Fi", "Breakfast", "Spa", "Business Centre"],
-    price: 210,
-    policy: "approval",
-    image: hotelDowntown,
-  },
-  {
-    id: "ibis",
-    name: "ibis Dubai World Trade Centre",
-    stars: 4,
+    id: "ibis-one-central",
+    name: "ibis One Central",
     area: "Trade Centre",
-    distance: "3.8 km from City Centre",
-    amenities: ["Free Wi-Fi", "Breakfast", "Metro Access", "Gym"],
-    price: 75,
+    city: "Dubai",
+    stars: 3,
+    rating: 8.1,
+    reviews: 640,
+    price: 142,
     policy: "within",
     image: hotelIbis,
+    amenities: ["Free WiFi", "Restaurant", "Metro Access"],
   },
-];
-
-export const hotelPolicyFilters = [
-  { name: "Within Policy", count: 184 },
-  { name: "Needs Approval", count: 72 },
-  { name: "Out of Policy", count: 26 },
-];
-
-export const starFilters = [
-  { stars: 5, count: 96 },
-  { stars: 4, count: 142 },
-  { stars: 3, count: 33 },
-  { stars: 2, count: 20 },
-  { stars: 1, count: 8 },
+  {
+    id: "address-downtown",
+    name: "Address Downtown",
+    area: "Downtown Dubai",
+    city: "Dubai",
+    stars: 5,
+    rating: 9.2,
+    reviews: 2100,
+    price: 490,
+    policy: "approval",
+    image: hotelDowntown,
+    amenities: ["Burj View", "Luxury Spa", "Infinity Pool", "Fine Dining"],
+  },
 ];
 
 export const amenityFilters = [
-  { name: "Free Wi-Fi", count: 322 },
+  { name: "Free WiFi", count: 320 },
   { name: "Breakfast Included", count: 281 },
   { name: "Airport Shuttle", count: 96 },
   { name: "Meeting Facilities", count: 142 },
@@ -365,4 +396,5 @@ export const calendarEvents: Record<number, "gold" | "blue"> = {
   14: "gold",
   19: "blue",
   22: "gold",
+  23: "gold",
 };
