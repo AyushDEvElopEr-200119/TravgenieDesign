@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="tg-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F224A"/>
+      <stop offset="100%" stop-color="#060D1B"/>
+    </linearGradient>
+    <linearGradient id="tg-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE5B0"/>
+      <stop offset="50%" stop-color="#D4A043"/>
+      <stop offset="100%" stop-color="#9A6916"/>
+    </linearGradient>
+    <linearGradient id="tg-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4A043" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#9A6916" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded Squircle Background -->
+  <rect width="64" height="64" rx="14" fill="url(#tg-bg)"/>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.25" stroke="url(#tg-border)" stroke-width="1.5"/>
+  <!-- TravGenie Brand Mark -->
+  <g transform="translate(18, 9) scale(0.24)" fill="url(#tg-gold)">
+    <path d="M60 34C60 18 46 4 26 8c14 6 20 16 20 28 0 6-2 10-6 14 10 1 20-6 20-16z"/>
+    <ellipse cx="62" cy="48" rx="21" ry="18"/>
+    <ellipse cx="60" cy="82" rx="27" ry="22"/>
+    <ellipse cx="60" cy="118" rx="34" ry="25"/>
+    <path d="M18 150c0-13 19-22 42-22s42 9 42 22-19 22-42 22c-12 0-23-3-30-8 12 2 26 1 36-4 8-4 11-9 5-13-9-6-33-6-45 1-5 3-8 5-8 2z"/>
+  </g>
+</svg>
