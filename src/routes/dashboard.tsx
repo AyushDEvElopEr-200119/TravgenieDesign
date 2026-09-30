@@ -10,6 +10,7 @@ import {
   Pie,
   PieChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -74,9 +75,9 @@ const updateIcons = { tag: Tag, doc: FileText, building: Building2 };
 
 function ViewAllLink({ label = "View All" }: { label?: string }) {
   return (
-    <button className="flex items-center gap-1 text-[11px] 2xl:text-[11.5px] font-semibold text-gold-600 transition-transform hover:translate-x-0.5">
+    <button className="group flex items-center gap-1 text-[11px] 2xl:text-[11.5px] font-semibold text-gold-600 transition-colors hover:text-gold-700">
       {label}
-      <ArrowRight className="size-2.5 2xl:size-3" />
+      <ArrowRight className="size-2.5 2xl:size-3 transition-transform duration-200 group-hover:translate-x-0.5" />
     </button>
   );
 }
@@ -104,8 +105,8 @@ function Sparkline({
           <AreaChart data={rows} margin={{ top: 2, bottom: 0, left: 0, right: 0 }}>
             <defs>
               <linearGradient id={`spark-${tone}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={colors[tone]} stopOpacity={0.35} />
-                <stop offset="100%" stopColor={colors[tone]} stopOpacity={0} />
+                <stop offset="0%" stopColor={colors[tone]} stopOpacity={0.4} />
+                <stop offset="100%" stopColor={colors[tone]} stopOpacity={0.05} />
               </linearGradient>
             </defs>
             <Area
@@ -133,15 +134,18 @@ function KpiRow() {
       {kpis.map((kpi) => {
         const Icon = kpiIcons[kpi.icon];
         return (
-          <Card key={kpi.label} className="relative p-2.5 2xl:p-3">
+          <Card key={kpi.label} className="group relative overflow-hidden p-2.5 2xl:p-3">
+            {/* Subtle top gold accent glow on hover */}
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-gold-500/0 to-transparent transition-all duration-300 group-hover:via-gold-500/60" />
+
             <button
               aria-label={`Open ${kpi.label}`}
-              className="absolute top-2.5 right-2.5 flex size-4.5 items-center justify-center rounded-full border border-border/60 text-secondary-foreground transition-colors hover:border-gold-500 hover:text-gold-700"
+              className="absolute top-2.5 right-2.5 flex size-4.5 items-center justify-center rounded-full border border-border/60 text-secondary-foreground transition-all duration-200 hover:border-gold-500 hover:bg-gold-50 hover:text-gold-700"
             >
-              <ChevronRight className="size-2.5" />
+              <ChevronRight className="size-2.5 transition-transform duration-200 group-hover:translate-x-0.5" />
             </button>
             <div className="flex items-center gap-2">
-              <span className="flex size-7.5 shrink-0 items-center justify-center rounded-full bg-[#FDF3E3] text-[#B8842F]">
+              <span className="flex size-7.5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FEF8ED] to-[#FDF1D8] border border-[#FBE6C4]/60 text-[#B8842F] shadow-2xs transition-transform duration-300 group-hover:scale-105">
                 <Icon className="size-4" />
               </span>
               <div className="min-w-0">
@@ -177,13 +181,14 @@ function KpiRow() {
 
 function HeroBanner() {
   return (
-    <div className="relative h-[125px] xl:h-[135px] 2xl:h-[146px] overflow-hidden rounded-xl border border-border/40 shadow-xs">
+    <div className="relative h-[125px] xl:h-[135px] 2xl:h-[146px] overflow-hidden rounded-xl border border-border/60 shadow-card">
       <img src={hotelRoom} alt="" className="absolute inset-0 size-full object-cover object-[center_45%]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-white/94 via-white/55 to-transparent" />
+      {/* Luxury smooth vignette backdrop */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/96 via-white/85 via-45% to-white/10 to-80%" />
       <div className="relative flex h-full items-center justify-between gap-4 px-5">
         <div>
-          <p className="text-[12px] 2xl:text-[13px] text-navy/80">Good Evening,</p>
-          <p className="text-[24px] 2xl:text-[28px] leading-tight font-bold text-navy -mt-0.5">Azim</p>
+          <p className="text-[12px] 2xl:text-[13px] font-medium text-navy/75">Good Evening,</p>
+          <p className="text-[24px] 2xl:text-[28px] leading-tight font-bold text-navy -mt-0.5 tracking-tight">Azim</p>
           <p className="text-[13px] 2xl:text-[14.5px] font-bold text-navy mt-0.5">Let's plan your next trip</p>
           <p className="text-[10.5px] 2xl:text-[11.5px] text-navy/70 mt-0.5">
             Exclusive corporate fares. Greater control.
@@ -207,16 +212,16 @@ function HeroBanner() {
             <Link
               key={c.title}
               to={c.to}
-              className="flex h-[38px] xl:h-[42px] 2xl:h-[46px] w-[205px] xl:w-[225px] 2xl:w-[240px] items-center gap-2 rounded-lg bg-white/85 backdrop-blur-md px-2.5 border border-white/70 shadow-xs transition-transform hover:-translate-y-px"
+              className="group flex h-[38px] xl:h-[42px] 2xl:h-[46px] w-[205px] xl:w-[225px] 2xl:w-[240px] items-center gap-2 rounded-lg bg-white/90 backdrop-blur-md px-2.5 border border-white/80 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:border-gold-300 hover:shadow-md"
             >
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#FDF3E3] text-[#B8842F]">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FEF8ED] to-[#FDF1D8] text-[#B8842F] border border-[#FBE6C4]/60 shadow-2xs transition-transform duration-200 group-hover:scale-105">
                 <c.icon className="size-3.5" />
               </span>
               <span className="flex-1 min-w-0">
                 <span className="block text-[11.5px] 2xl:text-[12.5px] font-bold text-navy leading-snug">{c.title}</span>
                 <span className="block text-[9.5px] 2xl:text-[10.5px] text-secondary-foreground truncate">{c.sub}</span>
               </span>
-              <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-white text-[#B8842F] shadow-xs">
+              <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-white text-[#B8842F] shadow-xs border border-border/40 transition-colors duration-200 group-hover:bg-[#C9963B] group-hover:text-white">
                 <ArrowRight className="size-2.5 2xl:size-3" />
               </span>
             </Link>
@@ -239,8 +244,8 @@ function TrendCard() {
             <button
               onClick={() => setSeries("flights")}
               className={cn(
-                "rounded px-2.5 py-0.5 font-semibold transition-colors",
-                series === "flights" ? "bg-[#C9963B] text-white shadow-xs" : "text-secondary-foreground",
+                "rounded px-2.5 py-0.5 font-semibold transition-all duration-150 active:scale-95",
+                series === "flights" ? "bg-[#C9963B] text-white shadow-xs" : "text-secondary-foreground hover:text-foreground",
               )}
             >
               Flights
@@ -248,8 +253,8 @@ function TrendCard() {
             <button
               onClick={() => setSeries("hotels")}
               className={cn(
-                "rounded px-2.5 py-0.5 font-semibold transition-colors",
-                series === "hotels" ? "bg-[#C9963B] text-white shadow-xs" : "text-secondary-foreground",
+                "rounded px-2.5 py-0.5 font-semibold transition-all duration-150 active:scale-95",
+                series === "hotels" ? "bg-[#C9963B] text-white shadow-xs" : "text-secondary-foreground hover:text-foreground",
               )}
             >
               Hotels
@@ -258,7 +263,7 @@ function TrendCard() {
           <span className="relative">
             <select
               aria-label="Period"
-              className="h-7 appearance-none rounded-md border border-border/60 bg-card pr-6 pl-2 text-[10.5px] 2xl:text-[11.5px] font-medium outline-none"
+              className="h-7 appearance-none rounded-md border border-border/60 bg-card pr-6 pl-2 text-[10.5px] 2xl:text-[11.5px] font-medium outline-none transition-colors hover:border-gold-400 focus:border-gold-500 cursor-pointer"
             >
               <option>Last 6 Months</option>
               <option>Last 12 Months</option>
@@ -282,12 +287,12 @@ function TrendCard() {
           <AreaChart data={spendTrend} margin={{ top: 6, right: 12, left: 16, bottom: 0 }}>
             <defs>
               <linearGradient id="fill-gold" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#C8902F" stopOpacity={0.25} />
-                <stop offset="100%" stopColor="#C8902F" stopOpacity={0} />
+                <stop offset="0%" stopColor="#C8902F" stopOpacity={0.28} />
+                <stop offset="100%" stopColor="#C8902F" stopOpacity={0.02} />
               </linearGradient>
               <linearGradient id="fill-blue" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#1E88E5" stopOpacity={0.2} />
-                <stop offset="100%" stopColor="#1E88E5" stopOpacity={0} />
+                <stop offset="0%" stopColor="#1E88E5" stopOpacity={0.22} />
+                <stop offset="100%" stopColor="#1E88E5" stopOpacity={0.02} />
               </linearGradient>
             </defs>
             <CartesianGrid stroke="#EEE9E0" strokeDasharray="4 4" vertical={false} />
@@ -307,6 +312,24 @@ function TrendCard() {
               ticks={[0, 10000, 20000, 30000]}
               tickFormatter={(v: number) => (v === 0 ? "0" : `USD ${v / 1000}K`)}
             />
+            <Tooltip
+              content={({ active, payload, label }) => {
+                if (!active || !payload?.length) return null;
+                return (
+                  <div className="rounded-lg border border-white/20 bg-[#0B1730]/95 px-3 py-2 text-white shadow-xl backdrop-blur-md text-[11px]">
+                    <p className="font-semibold text-white/90 mb-1 border-b border-white/10 pb-0.5">{label} 2026</p>
+                    <div className="flex items-center justify-between gap-3 text-gold-400">
+                      <span className="flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-[#C8902F]" /> Flights:</span>
+                      <span className="font-bold text-white">USD {payload[0]?.value?.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3 text-blue-400 mt-0.5">
+                      <span className="flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-[#1E88E5]" /> Hotels:</span>
+                      <span className="font-bold text-white">USD {payload[1]?.value?.toLocaleString()}</span>
+                    </div>
+                  </div>
+                );
+              }}
+            />
             <Area
               type="linear"
               dataKey="flights"
@@ -314,6 +337,7 @@ function TrendCard() {
               strokeWidth={2}
               fill="url(#fill-gold)"
               dot={{ r: 2.5, fill: "#C8902F", strokeWidth: 0 }}
+              activeDot={{ r: 4.5, stroke: "#FFFFFF", strokeWidth: 2, fill: "#C8902F" }}
               isAnimationActive={false}
             />
             <Area
@@ -323,6 +347,7 @@ function TrendCard() {
               strokeWidth={2}
               fill="url(#fill-blue)"
               dot={{ r: 2.5, fill: "#1E88E5", strokeWidth: 0 }}
+              activeDot={{ r: 4.5, stroke: "#FFFFFF", strokeWidth: 2, fill: "#1E88E5" }}
               isAnimationActive={false}
             />
           </AreaChart>
@@ -336,18 +361,18 @@ function BreakdownCard() {
   const [tab, setTab] = useState("product");
 
   return (
-    <Card className="p-2.5 2xl:p-3.5 md:col-span-2">
-      <div className="mb-1.5 flex items-center justify-between gap-1.5">
-        <h2 className="text-[13px] 2xl:text-[14.5px] font-bold text-foreground">
+    <Card className="p-2.5 2xl:p-3.5 md:col-span-2 min-w-0">
+      <div className="mb-2 flex items-center justify-between gap-1.5">
+        <h2 className="text-[13px] 2xl:text-[14.5px] font-bold text-foreground truncate">
           Spend Breakdown <span className="font-normal text-secondary-foreground text-[11px] 2xl:text-[12px]">(USD)</span>
         </h2>
-        <div className="inline-flex gap-0.5 rounded-md text-[9.5px] 2xl:text-[10.5px] font-medium">
+        <div className="inline-flex shrink-0 items-center gap-1 rounded-md text-[10px] 2xl:text-[11px] font-medium">
           <button
             onClick={() => setTab("product")}
             className={cn(
-              "rounded px-1.5 2xl:px-2 py-0.5 transition-colors",
+              "whitespace-nowrap rounded px-2 py-0.5 transition-colors",
               tab === "product"
-                ? "border border-gold-500 bg-gold-50 font-semibold text-gold-700"
+                ? "border border-gold-500 bg-gold-50 font-semibold text-gold-700 shadow-2xs"
                 : "text-secondary-foreground hover:bg-muted",
             )}
           >
@@ -356,20 +381,20 @@ function BreakdownCard() {
           <button
             onClick={() => setTab("department")}
             className={cn(
-              "rounded px-1.5 2xl:px-2 py-0.5 transition-colors",
+              "whitespace-nowrap rounded px-2 py-0.5 transition-colors",
               tab === "department"
-                ? "border border-gold-500 bg-gold-50 font-semibold text-gold-700"
+                ? "border border-gold-500 bg-gold-50 font-semibold text-gold-700 shadow-2xs"
                 : "text-secondary-foreground hover:bg-muted",
             )}
           >
-            By Dept
+            By Department
           </button>
           <button
             onClick={() => setTab("policy")}
             className={cn(
-              "rounded px-1.5 2xl:px-2 py-0.5 transition-colors",
+              "whitespace-nowrap rounded px-2 py-0.5 transition-colors",
               tab === "policy"
-                ? "border border-gold-500 bg-gold-50 font-semibold text-gold-700"
+                ? "border border-gold-500 bg-gold-50 font-semibold text-gold-700 shadow-2xs"
                 : "text-secondary-foreground hover:bg-muted",
             )}
           >
@@ -396,6 +421,18 @@ function BreakdownCard() {
                   <Cell key={d.name} fill={d.color} />
                 ))}
               </Pie>
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (!active || !payload?.length) return null;
+                  const d = payload[0];
+                  return (
+                    <div className="rounded-lg border border-white/20 bg-[#0B1730]/95 px-2.5 py-1.5 text-white shadow-xl backdrop-blur-md text-[11px]">
+                      <span className="font-semibold text-white/90">{d.name}: </span>
+                      <span className="font-bold text-gold-400">USD {d.value?.toLocaleString()}</span>
+                    </div>
+                  );
+                }}
+              />
             </PieChart>
           </ResponsiveContainer>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
@@ -407,9 +444,9 @@ function BreakdownCard() {
 
         <div className="flex-1 space-y-1.5">
           {spendBreakdown.map((d, i) => (
-            <div key={d.name}>
+            <div key={d.name} className="p-1 rounded-md transition-colors hover:bg-muted/40">
               <div className="flex items-center gap-1.5">
-                <span className="size-2 rounded-full" style={{ background: d.color }} />
+                <span className="size-2 rounded-full shadow-2xs" style={{ background: d.color }} />
                 <span className="text-[11.5px] 2xl:text-[12px] font-semibold text-foreground">{d.name}</span>
               </div>
               <div className="mt-0.5 flex items-baseline justify-between pl-3.5">
@@ -432,7 +469,7 @@ function BookingsCard() {
   );
 
   return (
-    <Card className="p-2.5 2xl:p-3.5 md:col-span-3">
+    <Card className="p-2.5 2xl:p-3.5 md:col-span-3 min-w-0 overflow-hidden">
       <div className="mb-2 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <h2 className="text-[13px] 2xl:text-[14.5px] font-bold text-foreground">Recent Bookings</h2>
@@ -442,8 +479,8 @@ function BookingsCard() {
               className={cn(
                 "rounded px-2 2xl:px-2.5 py-0.5 font-medium transition-colors",
                 tab === "all"
-                  ? "bg-[#FDF8EF] border border-[#C9963B] text-[#8A5A12] font-semibold"
-                  : "bg-muted text-secondary-foreground",
+                  ? "bg-[#FDF8EF] border border-[#C9963B] text-[#8A5A12] font-semibold shadow-2xs"
+                  : "bg-muted text-secondary-foreground hover:text-foreground",
               )}
             >
               All
@@ -453,8 +490,8 @@ function BookingsCard() {
               className={cn(
                 "rounded px-2 2xl:px-2.5 py-0.5 font-medium transition-colors",
                 tab === "flights"
-                  ? "bg-[#FDF8EF] border border-[#C9963B] text-[#8A5A12] font-semibold"
-                  : "bg-muted text-secondary-foreground",
+                  ? "bg-[#FDF8EF] border border-[#C9963B] text-[#8A5A12] font-semibold shadow-2xs"
+                  : "bg-muted text-secondary-foreground hover:text-foreground",
               )}
             >
               Flights
@@ -464,8 +501,8 @@ function BookingsCard() {
               className={cn(
                 "rounded px-2 2xl:px-2.5 py-0.5 font-medium transition-colors",
                 tab === "hotels"
-                  ? "bg-[#FDF8EF] border border-[#C9963B] text-[#8A5A12] font-semibold"
-                  : "bg-muted text-secondary-foreground",
+                  ? "bg-[#FDF8EF] border border-[#C9963B] text-[#8A5A12] font-semibold shadow-2xs"
+                  : "bg-muted text-secondary-foreground hover:text-foreground",
               )}
             >
               Hotels
@@ -475,47 +512,52 @@ function BookingsCard() {
         <ViewAllLink />
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[580px] border-collapse text-[11px] 2xl:text-[12px]">
+      <div className="w-full overflow-x-auto no-scrollbar">
+        <table className="w-full border-collapse text-[10.5px] 2xl:text-[11.5px]">
           <thead>
-            <tr className="text-left text-[10px] 2xl:text-[10.5px] font-medium text-muted-foreground border-b border-divider">
-              <th className="pb-1 font-medium">Booking ID</th>
-              <th className="pb-1 font-medium">Type</th>
-              <th className="pb-1 font-medium">Traveller(s)</th>
-              <th className="pb-1 font-medium">Route / Hotel</th>
-              <th className="pb-1 font-medium">Travel Date</th>
-              <th className="pb-1 font-medium">Amount (USD)</th>
-              <th className="pb-1 font-medium min-w-[115px]">Status</th>
-              <th className="pb-1 font-medium text-right w-4"></th>
+            <tr className="text-left text-[9.5px] 2xl:text-[10px] font-medium text-muted-foreground/80 border-b border-divider">
+              <th className="pb-1.5 px-2 font-medium whitespace-nowrap">Booking ID</th>
+              <th className="pb-1.5 px-2 font-medium whitespace-nowrap">Type</th>
+              <th className="pb-1.5 px-2 font-medium whitespace-nowrap">Traveller(s)</th>
+              <th className="pb-1.5 px-2 font-medium whitespace-nowrap">Route / Hotel</th>
+              <th className="pb-1.5 px-2 font-medium whitespace-nowrap">Travel Date</th>
+              <th className="pb-1.5 px-2 font-medium whitespace-nowrap">Amount</th>
+              <th className="pb-1.5 px-2 font-medium whitespace-nowrap">Status</th>
+              <th className="pb-1.5 px-1 font-medium text-right w-4"></th>
             </tr>
           </thead>
           <tbody>
             {rows.map((b) => (
-              <tr key={b.id} className="group border-b border-divider/40 hover:bg-[#FBF8F2] transition-colors cursor-pointer">
-                <td className="py-1 2xl:py-1.5 whitespace-nowrap font-medium text-foreground">{b.id}</td>
-                <td className="py-1 2xl:py-1.5 whitespace-nowrap">
-                  <span className="flex items-center gap-1 text-secondary-foreground">
-                    {b.type === "Flight" ? <Plane className="size-3" /> : <Building2 className="size-3" />}
+              <tr
+                key={b.id}
+                className="group border-b border-divider/40 hover:bg-[#FBF8F2] transition-colors duration-150 cursor-pointer"
+              >
+                <td className="py-1.5 px-2 whitespace-nowrap font-medium text-foreground">{b.id}</td>
+                <td className="py-1.5 px-2 whitespace-nowrap">
+                  <span className="flex items-center gap-1.5 text-secondary-foreground">
+                    {b.type === "Flight" ? <Plane className="size-3 text-[#B8842F]" /> : <Building2 className="size-3 text-[#B8842F]" />}
                     {b.type}
                   </span>
                 </td>
-                <td className="py-1 2xl:py-1.5 whitespace-nowrap font-medium text-foreground">{b.traveller}</td>
-                <td className="py-1 2xl:py-1.5 whitespace-nowrap text-secondary-foreground truncate max-w-[150px]">{b.route}</td>
-                <td className="py-1 2xl:py-1.5 whitespace-nowrap text-secondary-foreground">{b.date}</td>
-                <td className="py-1 2xl:py-1.5 whitespace-nowrap font-bold text-foreground">{b.amount}</td>
-                <td className="py-1 2xl:py-1.5 whitespace-nowrap">
-                  <span className="inline-flex items-center gap-1.5 min-w-[110px]">
+                <td className="py-1.5 px-2 whitespace-nowrap font-medium text-foreground">{b.traveller}</td>
+                <td className="py-1.5 px-2 text-secondary-foreground truncate max-w-[130px] 2xl:max-w-[155px]" title={b.route}>
+                  {b.route}
+                </td>
+                <td className="py-1.5 px-2 whitespace-nowrap text-secondary-foreground text-[10px] 2xl:text-[10.5px]">{b.date}</td>
+                <td className="py-1.5 px-2 whitespace-nowrap font-bold text-foreground">{b.amount}</td>
+                <td className="py-1.5 px-2 whitespace-nowrap">
+                  <span className="inline-flex items-center gap-1.5">
                     <span
                       className={cn(
                         "size-1.5 rounded-full shrink-0",
-                        b.status === "Confirmed" && "bg-[#1FA45B]",
-                        b.status === "Pending Approval" && "bg-[#F08A24]",
+                        b.status === "Confirmed" && "bg-[#1FA45B] shadow-xs shadow-emerald-500/50",
+                        b.status === "Pending Approval" && "bg-[#F08A24] shadow-xs shadow-orange-500/50",
                         b.status === "On Hold" && "bg-[#8C94A6]",
                       )}
                     />
                     <span
                       className={cn(
-                        "font-medium whitespace-nowrap text-[11px] 2xl:text-[11.5px]",
+                        "font-medium whitespace-nowrap text-[10px] 2xl:text-[10.5px]",
                         b.status === "Confirmed" && "text-[#1FA45B]",
                         b.status === "Pending Approval" && "text-[#F08A24]",
                         b.status === "On Hold" && "text-[#8C94A6]",
@@ -525,8 +567,8 @@ function BookingsCard() {
                     </span>
                   </span>
                 </td>
-                <td className="py-1 2xl:py-1.5 text-right w-4">
-                  <ChevronRight className="inline size-3 text-secondary-foreground/60 transition-transform group-hover:translate-x-0.5" />
+                <td className="py-1.5 px-1 text-right w-4">
+                  <ChevronRight className="inline size-3 text-secondary-foreground/40 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-gold-600" />
                 </td>
               </tr>
             ))}
@@ -566,15 +608,15 @@ function PolicyComplianceCard() {
           </ResponsiveContainer>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-[13px] 2xl:text-[14px] font-bold leading-none text-foreground">92%</span>
-            <span className="text-[7px] 2xl:text-[7.5px] text-muted-foreground mt-0.5 leading-none">Within Policy</span>
+            <span className="text-[7px] 2xl:text-[7.5px] text-muted-foreground mt-0.5 leading-none font-medium">Within Policy</span>
           </div>
         </div>
 
         <ul className="flex-1 space-y-0.5 text-[10.5px] 2xl:text-[11px]">
           {policyCompliance.map((d) => (
-            <li key={d.name} className="flex items-center justify-between gap-2">
+            <li key={d.name} className="flex items-center justify-between gap-2 p-0.5 rounded transition-colors hover:bg-muted/40">
               <span className="flex items-center gap-1.5 text-secondary-foreground">
-                <span className="size-1.5 rounded-full" style={{ background: d.color }} />
+                <span className="size-1.5 rounded-full shadow-2xs" style={{ background: d.color }} />
                 {d.name}
               </span>
               <span className="font-bold text-foreground">{d.value}</span>
@@ -599,21 +641,25 @@ function TopDestinationsCard() {
       </div>
       <ul className="space-y-0.5">
         {topDestinations.map((d) => (
-          <li key={d.city} className="flex items-center gap-1.5 py-0.5">
+          <li key={d.city} className="group/item flex items-center gap-1.5 py-0.5 px-1 rounded-md transition-colors hover:bg-[#FDF8EF]/80">
             <img
               src={d.image}
               alt=""
               loading="lazy"
-              className="size-3.5 2xl:size-4 rounded-xs object-cover"
+              className="size-3.5 2xl:size-4 rounded-xs object-cover border border-border/50 shadow-2xs transition-transform duration-200 group-hover/item:scale-105"
             />
-            <span className="w-[82px] 2xl:w-[90px] shrink-0 text-[10.5px] 2xl:text-[11px] font-medium text-foreground truncate">{d.city}</span>
-            <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+            <span className="w-[82px] 2xl:w-[90px] shrink-0 text-[10.5px] 2xl:text-[11px] font-medium text-foreground truncate group-hover/item:text-gold-800 transition-colors">
+              {d.city}
+            </span>
+            <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted shadow-inner">
               <span
-                className="block h-full rounded-full bg-[#C9963B]"
+                className="block h-full rounded-full bg-gradient-to-r from-[#DFB268] to-[#C9963B] transition-all duration-300 group-hover/item:from-[#E8C27E] group-hover/item:to-[#D4A35C]"
                 style={{ width: `${(d.count / max) * 100}%` }}
               />
             </span>
-            <span className="w-4 text-right text-[10.5px] 2xl:text-[11px] font-bold text-foreground">{d.count}</span>
+            <span className="w-4 text-right text-[10.5px] 2xl:text-[11px] font-bold text-foreground group-hover/item:text-gold-700 transition-colors">
+              {d.count}
+            </span>
           </li>
         ))}
       </ul>
@@ -628,11 +674,11 @@ function CalendarCard() {
     <Card className="p-2.5 2xl:p-3">
       <h2 className="mb-1 text-[12.5px] 2xl:text-[13.5px] font-bold text-foreground">My Travel Calendar</h2>
       <div className="mb-1 flex items-center justify-between">
-        <button aria-label="Previous month" className="text-secondary-foreground hover:text-gold-700">
+        <button aria-label="Previous month" className="flex size-5.5 items-center justify-center rounded-full text-secondary-foreground transition-colors hover:bg-gold-50 hover:text-gold-700">
           <ChevronLeft className="size-3.5" />
         </button>
         <span className="text-[11.5px] 2xl:text-[12px] font-semibold text-foreground">November 2026</span>
-        <button aria-label="Next month" className="text-secondary-foreground hover:text-gold-700">
+        <button aria-label="Next month" className="flex size-5.5 items-center justify-center rounded-full text-secondary-foreground transition-colors hover:bg-gold-50 hover:text-gold-700">
           <ChevronRight className="size-3.5" />
         </button>
       </div>
@@ -651,8 +697,10 @@ function CalendarCard() {
             <span key={day} className="relative py-0.5">
               <span
                 className={cn(
-                  "mx-auto flex size-5 2xl:size-5.5 items-center justify-center rounded-full text-[10px] 2xl:text-[10.5px]",
-                  today && "bg-[#B8842F] font-bold text-white shadow-xs",
+                  "mx-auto flex size-5 2xl:size-5.5 items-center justify-center rounded-full text-[10px] 2xl:text-[10.5px] transition-all duration-150 cursor-pointer",
+                  today
+                    ? "bg-gradient-to-br from-[#C9963B] to-[#A8741A] font-bold text-white shadow-xs shadow-gold-500/40 hover:scale-105"
+                    : "hover:bg-gold-50 hover:text-gold-800 text-foreground",
                 )}
               >
                 {day}
@@ -661,7 +709,7 @@ function CalendarCard() {
                 <span
                   className={cn(
                     "absolute bottom-0 left-1/2 size-1 -translate-x-1/2 rounded-full",
-                    dot === "gold" ? "bg-[#C9963B]" : "bg-[#1E88E5]",
+                    dot === "gold" ? "bg-[#C9963B] shadow-xs shadow-amber-500/50" : "bg-[#1E88E5] shadow-xs shadow-blue-500/50",
                   )}
                 />
               ) : null}
@@ -683,16 +731,18 @@ function UpcomingTripsCard() {
       <ul className="space-y-0.5">
         {upcomingTrips.map((trip) => (
           <li key={trip.title}>
-            <button className="flex w-full items-center gap-2 rounded-lg p-1 text-left transition-colors hover:bg-gold-50/60">
-              <span className="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-[#FDF3E3] text-[#B8842F]">
+            <button className="group flex w-full items-center gap-2 rounded-lg p-1 text-left border border-transparent transition-all duration-200 hover:bg-[#FDF8EF] hover:border-[#F2DFBA]/60">
+              <span className="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FEF8ED] to-[#FDF1D8] text-[#B8842F] border border-[#FBE6C4]/60 shadow-2xs transition-transform duration-200 group-hover:scale-105">
                 {trip.kind === "flight" ? <Plane className="size-3" /> : <Building2 className="size-3" />}
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-[11px] 2xl:text-[11.5px] font-bold text-foreground leading-tight">{trip.title}</span>
+                <span className="block truncate text-[11px] 2xl:text-[11.5px] font-bold text-foreground leading-tight group-hover:text-gold-800 transition-colors">
+                  {trip.title}
+                </span>
                 <span className="block text-[9.5px] 2xl:text-[10px] text-secondary-foreground leading-tight">{trip.range}</span>
                 <span className="block text-[9.5px] 2xl:text-[10px] text-muted-foreground leading-tight truncate">{trip.sub}</span>
               </span>
-              <ChevronRight className="size-3 shrink-0 text-secondary-foreground/60" />
+              <ChevronRight className="size-3 shrink-0 text-secondary-foreground/50 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold-600" />
             </button>
           </li>
         ))}
@@ -711,21 +761,23 @@ function UpdatesCard() {
         </h2>
         <ViewAllLink />
       </div>
-      <ul className="space-y-1.5">
+      <ul className="space-y-1">
         {importantUpdates.map((u) => {
           const Icon = updateIcons[u.icon];
           const tone =
             u.icon === "doc"
-              ? "bg-[#EAF2FD] text-[#1E88E5]"
-              : "bg-[#FDF3E3] text-[#B8842F]";
+              ? "bg-[#EAF2FD] text-[#1E88E5] border border-blue-200/50"
+              : "bg-gradient-to-br from-[#FEF8ED] to-[#FDF1D8] text-[#B8842F] border border-[#FBE6C4]/60";
           return (
-            <li key={u.title} className="flex gap-2">
-              <span className={cn("flex size-6.5 shrink-0 items-center justify-center rounded-full", tone)}>
+            <li key={u.title} className="group flex gap-2 p-1 rounded-lg transition-colors hover:bg-muted/40">
+              <span className={cn("flex size-6.5 shrink-0 items-center justify-center rounded-full shadow-2xs transition-transform duration-200 group-hover:scale-105", tone)}>
                 <Icon className="size-3" />
               </span>
               <span className="min-w-0 flex-1">
                 <span className="flex items-baseline justify-between gap-1">
-                  <span className="text-[11px] 2xl:text-[11.5px] font-bold text-foreground leading-tight">{u.title}</span>
+                  <span className="text-[11px] 2xl:text-[11.5px] font-bold text-foreground leading-tight group-hover:text-gold-800 transition-colors">
+                    {u.title}
+                  </span>
                   <span className="shrink-0 text-[9px] 2xl:text-[9.5px] text-muted-foreground">{u.date}</span>
                 </span>
                 <span className="mt-0.5 block text-[10px] 2xl:text-[10.5px] leading-tight text-secondary-foreground">{u.body}</span>
@@ -751,7 +803,7 @@ function DashboardPage() {
               <Link to="/dashboard" className="lg:hidden">
                 <Logo width={110} />
               </Link>
-              <div className="flex h-8.5 w-full items-center gap-2 rounded-lg bg-card px-3 border border-border/50 shadow-xs">
+              <div className="flex h-8.5 w-full items-center gap-2 rounded-lg bg-card px-3 border border-border/70 shadow-xs transition-all duration-200 focus-within:border-gold-500/80 focus-within:ring-2 focus-within:ring-gold-500/15 focus-within:shadow-sm">
                 <Search className="size-3.5 text-muted-foreground shrink-0" />
                 <input
                   aria-label="Search flights or hotels"
@@ -762,20 +814,20 @@ function DashboardPage() {
             </div>
 
             <div className="flex items-center gap-3 xl:gap-4 shrink-0">
-              <button className="hidden items-center gap-1.5 text-[11.5px] 2xl:text-[12px] font-medium text-secondary-foreground hover:text-foreground sm:flex">
+              <button className="hidden items-center gap-1.5 text-[11.5px] 2xl:text-[12px] font-medium text-secondary-foreground transition-colors hover:text-foreground hover:bg-gold-50/60 px-2 py-1 rounded-md sm:flex">
                 <ShieldCheck className="size-3.5 text-muted-foreground" /> Corporate Policy
               </button>
-              <button className="hidden items-center gap-1.5 text-[11.5px] 2xl:text-[12px] font-medium text-secondary-foreground hover:text-foreground sm:flex">
+              <button className="hidden items-center gap-1.5 text-[11.5px] 2xl:text-[12px] font-medium text-secondary-foreground transition-colors hover:text-foreground hover:bg-gold-50/60 px-2 py-1 rounded-md sm:flex">
                 <CircleHelp className="size-3.5 text-muted-foreground" /> Help
               </button>
-              <button className="relative" aria-label="Notifications">
-                <Bell className="size-4 text-secondary-foreground" />
-                <span className="absolute -top-1.5 -right-1.5 flex size-3.5 items-center justify-center rounded-full bg-[#E5382E] text-[8.5px] font-bold text-white">
+              <button className="relative group p-1 rounded-full hover:bg-gold-50/60 transition-colors" aria-label="Notifications">
+                <Bell className="size-4 text-secondary-foreground transition-transform duration-200 group-hover:scale-110 group-hover:text-gold-700" />
+                <span className="absolute -top-1 -right-1 flex size-3.5 items-center justify-center rounded-full bg-[#E5382E] text-[8.5px] font-bold text-white shadow-xs animate-pulse">
                   3
                 </span>
               </button>
-              <button className="flex items-center gap-1.5">
-                <span className="flex size-7 items-center justify-center rounded-full bg-[#A37036] text-[11px] font-bold text-white">
+              <button className="flex items-center gap-1.5 p-1 rounded-lg border border-transparent transition-all duration-200 hover:border-border/60 hover:bg-card">
+                <span className="flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-[#C9963B] to-[#8A5A12] text-[11px] font-bold text-white shadow-xs">
                   AZ
                 </span>
                 <span className="text-[12.5px] 2xl:text-[13px] font-bold text-navy">Azim</span>
@@ -791,15 +843,15 @@ function DashboardPage() {
           <KpiRow />
 
           {/* Middle Row (Spend Trend + Spend Breakdown) */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-2.5 xl:gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-2.5 xl:gap-3 min-w-0">
             <TrendCard />
             <BreakdownCard />
           </div>
 
           {/* Bottom Row (Recent Bookings + Policy Compliance & Top Destinations) */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-2.5 xl:gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-2.5 xl:gap-3 min-w-0">
             <BookingsCard />
-            <div className="flex flex-col gap-2 md:col-span-2">
+            <div className="flex flex-col gap-2 md:col-span-2 min-w-0">
               <PolicyComplianceCard />
               <TopDestinationsCard />
             </div>
