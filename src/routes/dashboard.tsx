@@ -33,7 +33,9 @@ import {
 } from "lucide-react";
 import hotelRoom from "@/assets/hotel-room.jpg";
 import { Logo } from "@/components/brand/Logo";
+import { NotificationDropdown } from "@/components/layout/NotificationDropdown";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { UserProfileMenu } from "@/components/layout/UserProfileMenu";
 import { Card } from "@/components/ui/primitives";
 import {
   calendarEvents,
@@ -73,12 +75,22 @@ export const Route = createFileRoute("/dashboard")({
 const kpiIcons = { plane: Plane, building: Building2, coins: Coins, hourglass: Hourglass };
 const updateIcons = { tag: Tag, doc: FileText, building: Building2 };
 
-function ViewAllLink({ label = "View All" }: { label?: string }) {
-  return (
-    <button className="group flex items-center gap-1 text-[11px] 2xl:text-[11.5px] font-semibold text-gold-600 transition-colors hover:text-gold-700">
+function ViewAllLink({ label = "View All", to }: { label?: string; to?: string }) {
+  const content = (
+    <>
       {label}
       <ArrowRight className="size-2.5 2xl:size-3 transition-transform duration-200 group-hover:translate-x-0.5" />
-    </button>
+    </>
+  );
+  const cls =
+    "group flex items-center gap-1 text-[11px] 2xl:text-[11.5px] font-semibold text-gold-600 transition-colors hover:text-gold-700";
+
+  return to ? (
+    <Link to={to} className={cls}>
+      {content}
+    </Link>
+  ) : (
+    <button className={cls}>{content}</button>
   );
 }
 
@@ -584,7 +596,7 @@ function PolicyComplianceCard() {
     <Card className="p-2.5 2xl:p-3">
       <div className="mb-1 flex items-center justify-between">
         <h2 className="text-[12.5px] 2xl:text-[13.5px] font-bold text-foreground">Policy Compliance</h2>
-        <ViewAllLink label="View Details" />
+        <ViewAllLink label="View Details" to="/policies" />
       </div>
       <div className="flex items-center gap-2.5">
         <div className="relative size-[64px] 2xl:size-[72px] shrink-0">
@@ -726,12 +738,15 @@ function UpcomingTripsCard() {
     <Card className="p-2.5 2xl:p-3">
       <div className="mb-1 flex items-center justify-between">
         <h2 className="text-[12.5px] 2xl:text-[13.5px] font-bold text-foreground">Upcoming Trips</h2>
-        <ViewAllLink />
+        <ViewAllLink to="/trips" />
       </div>
       <ul className="space-y-0.5">
         {upcomingTrips.map((trip) => (
           <li key={trip.title}>
-            <button className="group flex w-full items-center gap-2 rounded-lg p-1 text-left border border-transparent transition-all duration-200 hover:bg-[#FDF8EF] hover:border-[#F2DFBA]/60">
+            <Link
+              to="/trips"
+              className="group flex w-full items-center gap-2 rounded-lg p-1 text-left border border-transparent transition-all duration-200 hover:bg-[#FDF8EF] hover:border-[#F2DFBA]/60"
+            >
               <span className="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#FEF8ED] to-[#FDF1D8] text-[#B8842F] border border-[#FBE6C4]/60 shadow-2xs transition-transform duration-200 group-hover:scale-105">
                 {trip.kind === "flight" ? <Plane className="size-3" /> : <Building2 className="size-3" />}
               </span>
@@ -743,7 +758,7 @@ function UpcomingTripsCard() {
                 <span className="block text-[9.5px] 2xl:text-[10px] text-muted-foreground leading-tight truncate">{trip.sub}</span>
               </span>
               <ChevronRight className="size-3 shrink-0 text-secondary-foreground/50 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold-600" />
-            </button>
+            </Link>
           </li>
         ))}
       </ul>
@@ -759,7 +774,7 @@ function UpdatesCard() {
           <Bell className="size-3.5 text-[#C9963B] fill-[#C9963B]" />
           Important Updates
         </h2>
-        <ViewAllLink />
+        <ViewAllLink to="/notifications" />
       </div>
       <ul className="space-y-1">
         {importantUpdates.map((u) => {
@@ -814,25 +829,17 @@ function DashboardPage() {
             </div>
 
             <div className="flex items-center gap-3 xl:gap-4 shrink-0">
-              <button className="hidden items-center gap-1.5 text-[11.5px] 2xl:text-[12px] font-medium text-secondary-foreground transition-colors hover:text-foreground hover:bg-gold-50/60 px-2 py-1 rounded-md sm:flex">
+              <Link
+                to="/policies"
+                className="hidden items-center gap-1.5 text-[11.5px] 2xl:text-[12px] font-medium text-secondary-foreground transition-colors hover:text-foreground hover:bg-gold-50/60 px-2 py-1 rounded-md sm:flex"
+              >
                 <ShieldCheck className="size-3.5 text-muted-foreground" /> Corporate Policy
-              </button>
+              </Link>
               <button className="hidden items-center gap-1.5 text-[11.5px] 2xl:text-[12px] font-medium text-secondary-foreground transition-colors hover:text-foreground hover:bg-gold-50/60 px-2 py-1 rounded-md sm:flex">
                 <CircleHelp className="size-3.5 text-muted-foreground" /> Help
               </button>
-              <button className="relative group p-1 rounded-full hover:bg-gold-50/60 transition-colors" aria-label="Notifications">
-                <Bell className="size-4 text-secondary-foreground transition-transform duration-200 group-hover:scale-110 group-hover:text-gold-700" />
-                <span className="absolute -top-1 -right-1 flex size-3.5 items-center justify-center rounded-full bg-[#E5382E] text-[8.5px] font-bold text-white shadow-xs animate-pulse">
-                  3
-                </span>
-              </button>
-              <button className="flex items-center gap-1.5 p-1 rounded-lg border border-transparent transition-all duration-200 hover:border-border/60 hover:bg-card">
-                <span className="flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-[#C9963B] to-[#8A5A12] text-[11px] font-bold text-white shadow-xs">
-                  AZ
-                </span>
-                <span className="text-[12.5px] 2xl:text-[13px] font-bold text-navy">Azim</span>
-                <ChevronDown className="size-3 text-secondary-foreground" />
-              </button>
+              <NotificationDropdown />
+              <UserProfileMenu />
             </div>
           </div>
 

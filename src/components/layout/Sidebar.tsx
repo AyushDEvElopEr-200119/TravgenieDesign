@@ -20,13 +20,11 @@ const primary = [
   { label: "Book Hotel", icon: Building2, to: "/hotels" },
 ];
 
-const secondary = [
-  { label: "My Trips", icon: Briefcase },
+const secondary: { label: string; icon: any; to?: string; badge?: string }[] = [
+  { label: "My Trips", icon: Briefcase, to: "/trips" },
   { label: "Approvals", icon: CircleCheckBig, badge: "3" },
-  { label: "Travel Policy", icon: ShieldCheck },
-  { label: "Expenses", icon: FileText },
+  { label: "Travel Policy", icon: ShieldCheck, to: "/policies" },
   { label: "Reports", icon: BarChart3 },
-  { label: "Manage Team", icon: Users },
 ];
 
 export function Sidebar({ variant = "A" }: { variant?: "A" | "B" }) {
@@ -62,6 +60,7 @@ export function Sidebar({ variant = "A" }: { variant?: "A" | "B" }) {
               <Link
                 key={item.label}
                 to={item.to}
+                search={item.to === "/dashboard" ? { variant: "A" } : undefined}
                 className={cn(
                   "flex h-8.5 items-center gap-2.5 rounded-lg px-2.5 text-[12.5px] font-medium transition-all duration-150",
                   i === 0
@@ -78,20 +77,30 @@ export function Sidebar({ variant = "A" }: { variant?: "A" | "B" }) {
 
             <div className="my-1.5 h-px bg-white/10" />
 
-            {secondary.map((item) => (
-              <button
-                key={item.label}
-                className="flex h-8.5 items-center gap-2.5 rounded-lg px-2.5 text-[12.5px] text-white/85 transition-colors duration-150 hover:bg-white/10 hover:text-white"
-              >
-                <item.icon className="size-4 text-white/85" />
-                <span className="flex-1 text-left">{item.label}</span>
-                {item.badge ? (
-                  <span className="flex size-4 items-center justify-center rounded-full bg-[#E5382E] text-[9.5px] font-bold text-white">
-                    {item.badge}
-                  </span>
-                ) : null}
-              </button>
-            ))}
+            {secondary.map((item) => {
+              const content = (
+                <>
+                  <item.icon className="size-4 text-white/85" />
+                  <span className="flex-1 text-left">{item.label}</span>
+                  {item.badge ? (
+                    <span className="flex size-4 items-center justify-center rounded-full bg-[#E5382E] text-[9.5px] font-bold text-white">
+                      {item.badge}
+                    </span>
+                  ) : null}
+                </>
+              );
+              const cls =
+                "flex h-8.5 items-center gap-2.5 rounded-lg px-2.5 text-[12.5px] text-white/85 transition-colors duration-150 hover:bg-white/10 hover:text-white";
+              return item.to ? (
+                <Link key={item.label} to={item.to} className={cls}>
+                  {content}
+                </Link>
+              ) : (
+                <button key={item.label} className={cls}>
+                  {content}
+                </button>
+              );
+            })}
           </nav>
         </div>
 
