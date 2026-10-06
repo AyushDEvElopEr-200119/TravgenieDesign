@@ -12,6 +12,8 @@ import {
   TramFront,
 } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
+import { NotificationDropdown } from "@/components/layout/NotificationDropdown";
+import { UserProfileMenu } from "@/components/layout/UserProfileMenu";
 import { cn } from "@/lib/utils";
 
 export type ServiceTab = "flight" | "hotel" | "train" | "bus" | "car" | "more";
@@ -29,10 +31,12 @@ export function TopNav({
   active,
   user,
   floating = false,
+  activeNav,
 }: {
-  active: ServiceTab;
+  active?: ServiceTab;
   user: { initials: string; name: string };
   floating?: boolean;
+  activeNav?: "trips" | "policies" | "dashboard";
 }) {
   return (
     <div
@@ -50,33 +54,37 @@ export function TopNav({
         )}
       >
         <div className="flex h-[74px] items-center justify-between">
-          <Link to="/dashboard" aria-label="TravGenie home">
+          <Link to="/dashboard" search={{ variant: "A" }} aria-label="TravGenie home">
             <Logo width={150} />
           </Link>
 
           <div className="flex items-center gap-6">
-            <button className="flex items-center gap-2 text-[15px] text-foreground transition-colors hover:text-gold-700">
-              <ShieldCheck className="size-[18px]" />
+            <Link
+              to="/policies"
+              className={cn(
+                "flex items-center gap-2 text-[15px] transition-colors",
+                activeNav === "policies"
+                  ? "rounded-xl border border-[#E2B15E] bg-[#FEF8ED] px-3.5 py-1.5 font-semibold text-[#8A5A12] shadow-xs"
+                  : "text-foreground hover:text-gold-700",
+              )}
+            >
+              <ShieldCheck className={cn("size-[18px]", activeNav === "policies" ? "text-[#C9963B]" : "")} />
               Corporate Policies
-            </button>
-            <button className="flex items-center gap-2 text-[15px] text-foreground transition-colors hover:text-gold-700">
+            </Link>
+            <Link
+              to="/trips"
+              className={cn(
+                "flex items-center gap-2 text-[15px] transition-colors",
+                activeNav === "trips"
+                  ? "font-semibold text-gold-700"
+                  : "text-foreground hover:text-gold-700",
+              )}
+            >
               <TicketCheck className="size-[18px]" />
               My Trips
-            </button>
-            <button
-              className="relative text-foreground transition-colors hover:text-gold-700"
-              aria-label="Notifications"
-            >
-              <Bell className="size-[20px]" />
-              <span className="absolute -top-1 -right-1 size-2.5 rounded-full bg-destructive ring-2 ring-card" />
-            </button>
-            <button className="flex items-center gap-2.5">
-              <span className="flex size-10 items-center justify-center rounded-full bg-gold-600 text-[15px] font-semibold text-white">
-                {user.initials}
-              </span>
-              <span className="text-[15px] font-semibold">{user.name}</span>
-              <ChevronDown className="size-4 text-secondary-foreground" />
-            </button>
+            </Link>
+            <NotificationDropdown />
+            <UserProfileMenu user={user} />
           </div>
         </div>
       </div>

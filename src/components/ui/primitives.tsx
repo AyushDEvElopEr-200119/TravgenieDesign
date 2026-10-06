@@ -59,7 +59,7 @@ export function Card({
   return (
     <div
       {...rest}
-      className={cn("rounded-xl bg-card shadow-card fade-up", className)}
+      className={cn("rounded-xl bg-card border border-border/70 shadow-card card-hover", className)}
     >
       {children}
     </div>

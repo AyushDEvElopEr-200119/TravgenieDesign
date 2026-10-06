@@ -4,7 +4,6 @@ import {
   Briefcase,
   Building2,
   CircleCheckBig,
-  CircleHelp,
   FileText,
   House,
   Plane,
@@ -21,95 +20,107 @@ const primary = [
   { label: "Book Hotel", icon: Building2, to: "/hotels" },
 ];
 
-const secondary = [
-  { label: "My Trips", icon: Briefcase },
+const secondary: { label: string; icon: any; to?: string; badge?: string }[] = [
+  { label: "My Trips", icon: Briefcase, to: "/trips" },
   { label: "Approvals", icon: CircleCheckBig, badge: "3" },
-  { label: "Travel Policy", icon: ShieldCheck },
-  { label: "Expenses", icon: FileText },
+  { label: "Travel Policy", icon: ShieldCheck, to: "/policies" },
   { label: "Reports", icon: BarChart3 },
-  { label: "Manage Team", icon: Users },
 ];
 
 export function Sidebar({ variant = "A" }: { variant?: "A" | "B" }) {
   return (
-    <aside
-      className={cn(
-        "sticky top-0 hidden h-screen w-[172px] shrink-0 flex-col overflow-hidden lg:flex xl:w-[172px]",
-        variant === "A" ? "bg-gradient-navy" : "bg-navy-solid",
-      )}
-    >
-      <div className="px-4 pt-5 pb-6">
-        <Logo width={132} tone="white" />
-      </div>
-
-      <nav className="flex flex-col gap-0.5 px-3">
-        {primary.map((item, i) => (
-          <Link
-            key={item.label}
-            to={item.to}
-            className={cn(
-              "flex h-11 items-center gap-3.5 rounded-md px-3 text-[14px] transition-colors duration-150",
-              i === 0
-                ? "bg-gradient-gold-soft font-semibold text-navy"
-                : "text-white/85 hover:bg-white/8",
-            )}
-          >
-            <item.icon className="size-5" />
-            {item.label}
-          </Link>
-        ))}
-
-        <div className="my-3 h-px bg-white/12" />
-
-        {secondary.map((item) => (
-          <button
-            key={item.label}
-            className="flex h-11 items-center gap-3.5 rounded-md px-3 text-[14px] text-white/85 transition-colors duration-150 hover:bg-white/8"
-          >
-            <item.icon className="size-5" />
-            <span className="flex-1 text-left">{item.label}</span>
-            {item.badge ? (
-              <span className="flex size-5 items-center justify-center rounded-full bg-destructive text-[11px] font-bold text-white">
-                {item.badge}
-              </span>
-            ) : null}
-          </button>
-        ))}
-
-        {variant === "B" ? (
-          <>
-            <div className="my-3 h-px bg-white/12" />
-            <button className="flex h-11 items-center gap-3.5 rounded-md px-3 text-[14px] text-white/85 transition-colors duration-150 hover:bg-white/8">
-              <CircleHelp className="size-5" />
-              Support
-            </button>
-          </>
-        ) : null}
-      </nav>
-
-      {variant === "A" ? (
-        <div className="relative mt-auto h-[300px]">
+    <>
+      <aside
+        className={cn(
+          "fixed inset-y-0 left-0 z-30 hidden h-screen w-[190px] shrink-0 flex-col justify-between overflow-y-auto overflow-x-hidden no-scrollbar lg:flex",
+          "bg-[#0B1730]",
+        )}
+      >
+        {/* Background building image anchoring the lower section */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[460px] overflow-hidden">
           <img
             src={nightBuilding}
             alt=""
             loading="lazy"
-            className="absolute inset-0 size-full object-cover opacity-60"
+            className="size-full object-cover object-bottom opacity-85"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1730] via-[#0B1730]/70 to-transparent" />
-          <div className="absolute top-8 left-4 right-4">
-            <p className="font-serif text-[22px] leading-[1.25] text-white">
-              Business
-              <br />
-              Travel for
-              <br />
-              a Bigger
-              <br />
-              Tomorrow
-            </p>
-            <span className="mt-4 block h-[3px] w-10 bg-gold-500" />
-          </div>
+          {/* Smooth blend from top dark navy down into the twilight sky */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1730] via-[#0B1730]/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1730]/75 via-transparent to-transparent" />
         </div>
-      ) : null}
-    </aside>
+
+        {/* Content sits cleanly on top with relative z-10 */}
+        <div className="relative z-10">
+          <div className="px-3.5 pt-4 pb-3">
+            <Logo width={140} tone="white" />
+          </div>
+
+          <nav className="flex flex-col gap-0.5 px-2.5">
+            {primary.map((item, i) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                search={item.to === "/dashboard" ? { variant: "A" } : undefined}
+                className={cn(
+                  "flex h-8.5 items-center gap-2.5 rounded-lg px-2.5 text-[12.5px] font-medium transition-all duration-150",
+                  i === 0
+                    ? "bg-gradient-to-r from-[#DFB268] via-[#C9963B] to-[#A8741A] font-semibold text-[#0B1730] shadow-sm"
+                    : "text-white/85 hover:bg-white/10 hover:text-white",
+                )}
+              >
+                <item.icon
+                  className={cn("size-4", i === 0 ? "text-[#0B1730]" : "text-white/85")}
+                />
+                {item.label}
+              </Link>
+            ))}
+
+            <div className="my-1.5 h-px bg-white/10" />
+
+            {secondary.map((item) => {
+              const content = (
+                <>
+                  <item.icon className="size-4 text-white/85" />
+                  <span className="flex-1 text-left">{item.label}</span>
+                  {item.badge ? (
+                    <span className="flex size-4 items-center justify-center rounded-full bg-[#E5382E] text-[9.5px] font-bold text-white">
+                      {item.badge}
+                    </span>
+                  ) : null}
+                </>
+              );
+              const cls =
+                "flex h-8.5 items-center gap-2.5 rounded-lg px-2.5 text-[12.5px] text-white/85 transition-colors duration-150 hover:bg-white/10 hover:text-white";
+              return item.to ? (
+                <Link key={item.label} to={item.to} className={cls}>
+                  {content}
+                </Link>
+              ) : (
+                <button key={item.label} className={cls}>
+                  {content}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Bottom serif tagline with gold underline */}
+        <div className="relative z-10 p-3.5 pb-4">
+          <p className="font-serif text-[17px] leading-[1.22] text-white drop-shadow-sm">
+            Business
+            <br />
+            Travel for
+            <br />
+            a Bigger
+            <br />
+            Tomorrow
+          </p>
+          <span className="mt-2 block h-[2.5px] w-9 bg-[#C9963B]" />
+        </div>
+      </aside>
+
+      {/* Spacer to preserve layout flow on desktop */}
+      <div className="hidden w-[190px] shrink-0 lg:block" aria-hidden="true" />
+    </>
   );
 }

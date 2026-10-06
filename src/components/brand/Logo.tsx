@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 type LogoProps = {
   width?: number;
   tone?: "navy" | "white";
@@ -16,7 +18,6 @@ export function GenieMark({
 }) {
   return (
     <svg viewBox="0 0 120 190" className={className} style={style} aria-hidden="true">
-
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#F3D08A" />
@@ -39,43 +40,37 @@ export function GenieMark({
   );
 }
 
-export function Logo({ width = 210, tone = "navy", className }: LogoProps) {
+export function Logo({ width = 140, tone = "navy", className }: LogoProps) {
   const color = tone === "white" ? "#FFFFFF" : "#0B1730";
+  const baseSize = width * 0.115;
+
   return (
     <span
-      className={`inline-flex items-end leading-none ${className ?? ""}`}
-      style={{ width, fontFamily: "var(--font-sans)" }}
+      className={cn("inline-flex items-baseline leading-none whitespace-nowrap", className)}
+      style={{ fontFamily: "var(--font-sans)" }}
       aria-label="TravGenie.com"
     >
       <span
-        className="relative flex items-end font-bold tracking-[-0.02em]"
-        style={{ color, fontSize: width * 0.185 }}
+        className="relative inline-flex items-baseline font-bold tracking-[-0.02em] whitespace-nowrap"
+        style={{ color, fontSize: `${baseSize}px` }}
       >
         <span>TRAV</span>
         <GenieMark
           gradientId={`genie-${tone}-${width}`}
-          className="relative shrink-0"
+          className="relative shrink-0 self-center"
           style={
             {
-              width: width * 0.105,
-              height: width * 0.155,
-              marginInline: -width * 0.004,
-              marginBottom: -width * 0.012,
+              width: `${baseSize * 0.65}px`,
+              height: `${baseSize * 0.95}px`,
+              marginInline: "1px",
+              marginBottom: "-2px",
             } as React.CSSProperties
           }
         />
-        <span className="relative">
-          GENIE
-          <span
-            className="absolute -top-0.5 -right-2 font-medium"
-            style={{ fontSize: width * 0.05 }}
-          >
-            ®
-          </span>
-        </span>
+        <span>GENIE</span>
         <span
-          className="ml-2 font-semibold"
-          style={{ color, fontSize: width * 0.115 }}
+          className="font-medium opacity-90 ml-0.5"
+          style={{ color, fontSize: `${baseSize * 0.62}px` }}
         >
           .com
         </span>

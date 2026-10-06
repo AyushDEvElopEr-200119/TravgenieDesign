@@ -10,8 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AllNotificationsRouteImport } from './routes/all-notifications'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MyProfileRouteImport } from './routes/my-profile'
+import { Route as MyTripsRouteImport } from './routes/my-trips'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as PoliciesRouteImport } from './routes/policies'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as TravelPoliciesRouteImport } from './routes/travel-policies'
+import { Route as TripsRouteImport } from './routes/trips'
 import { Route as FlightsIndexRouteImport } from './routes/flights/index'
 import { Route as FlightsBookRouteImport } from './routes/flights/book'
 import { Route as FlightsResultsRouteImport } from './routes/flights/results'
@@ -24,6 +32,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AllNotificationsRoute = AllNotificationsRouteImport.update({
+  id: '/all-notifications',
+  path: '/all-notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -32,6 +45,41 @@ const DashboardRoute = DashboardRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyProfileRoute = MyProfileRouteImport.update({
+  id: '/my-profile',
+  path: '/my-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyTripsRoute = MyTripsRouteImport.update({
+  id: '/my-trips',
+  path: '/my-trips',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliciesRoute = PoliciesRouteImport.update({
+  id: '/policies',
+  path: '/policies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TravelPoliciesRoute = TravelPoliciesRouteImport.update({
+  id: '/travel-policies',
+  path: '/travel-policies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripsRoute = TripsRouteImport.update({
+  id: '/trips',
+  path: '/trips',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FlightsIndexRoute = FlightsIndexRouteImport.update({
@@ -67,8 +115,16 @@ const HotelsResultsRoute = HotelsResultsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/all-notifications': typeof AllNotificationsRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/my-profile': typeof MyProfileRoute
+  '/my-trips': typeof MyTripsRoute
+  '/notifications': typeof NotificationsRoute
+  '/policies': typeof PoliciesRoute
+  '/profile': typeof ProfileRoute
+  '/travel-policies': typeof TravelPoliciesRoute
+  '/trips': typeof TripsRoute
   '/flights/book': typeof FlightsBookRoute
   '/flights/results': typeof FlightsResultsRoute
   '/hotels/book': typeof HotelsBookRoute
@@ -78,8 +134,16 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/all-notifications': typeof AllNotificationsRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/my-profile': typeof MyProfileRoute
+  '/my-trips': typeof MyTripsRoute
+  '/notifications': typeof NotificationsRoute
+  '/policies': typeof PoliciesRoute
+  '/profile': typeof ProfileRoute
+  '/travel-policies': typeof TravelPoliciesRoute
+  '/trips': typeof TripsRoute
   '/flights/book': typeof FlightsBookRoute
   '/flights/results': typeof FlightsResultsRoute
   '/hotels/book': typeof HotelsBookRoute
@@ -90,8 +154,16 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/all-notifications': typeof AllNotificationsRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/my-profile': typeof MyProfileRoute
+  '/my-trips': typeof MyTripsRoute
+  '/notifications': typeof NotificationsRoute
+  '/policies': typeof PoliciesRoute
+  '/profile': typeof ProfileRoute
+  '/travel-policies': typeof TravelPoliciesRoute
+  '/trips': typeof TripsRoute
   '/flights/book': typeof FlightsBookRoute
   '/flights/results': typeof FlightsResultsRoute
   '/hotels/book': typeof HotelsBookRoute
@@ -103,8 +175,16 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/all-notifications'
     | '/dashboard'
     | '/login'
+    | '/my-profile'
+    | '/my-trips'
+    | '/notifications'
+    | '/policies'
+    | '/profile'
+    | '/travel-policies'
+    | '/trips'
     | '/flights/book'
     | '/flights/results'
     | '/hotels/book'
@@ -114,8 +194,16 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/all-notifications'
     | '/dashboard'
     | '/login'
+    | '/my-profile'
+    | '/my-trips'
+    | '/notifications'
+    | '/policies'
+    | '/profile'
+    | '/travel-policies'
+    | '/trips'
     | '/flights/book'
     | '/flights/results'
     | '/hotels/book'
@@ -125,8 +213,16 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/all-notifications'
     | '/dashboard'
     | '/login'
+    | '/my-profile'
+    | '/my-trips'
+    | '/notifications'
+    | '/policies'
+    | '/profile'
+    | '/travel-policies'
+    | '/trips'
     | '/flights/book'
     | '/flights/results'
     | '/hotels/book'
@@ -137,8 +233,16 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AllNotificationsRoute: typeof AllNotificationsRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
+  MyProfileRoute: typeof MyProfileRoute
+  MyTripsRoute: typeof MyTripsRoute
+  NotificationsRoute: typeof NotificationsRoute
+  PoliciesRoute: typeof PoliciesRoute
+  ProfileRoute: typeof ProfileRoute
+  TravelPoliciesRoute: typeof TravelPoliciesRoute
+  TripsRoute: typeof TripsRoute
   FlightsBookRoute: typeof FlightsBookRoute
   FlightsResultsRoute: typeof FlightsResultsRoute
   HotelsBookRoute: typeof HotelsBookRoute
@@ -156,6 +260,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/all-notifications': {
+      id: '/all-notifications'
+      path: '/all-notifications'
+      fullPath: '/all-notifications'
+      preLoaderRoute: typeof AllNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -168,6 +279,55 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-profile': {
+      id: '/my-profile'
+      path: '/my-profile'
+      fullPath: '/my-profile'
+      preLoaderRoute: typeof MyProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-trips': {
+      id: '/my-trips'
+      path: '/my-trips'
+      fullPath: '/my-trips'
+      preLoaderRoute: typeof MyTripsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/policies': {
+      id: '/policies'
+      path: '/policies'
+      fullPath: '/policies'
+      preLoaderRoute: typeof PoliciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-policies': {
+      id: '/travel-policies'
+      path: '/travel-policies'
+      fullPath: '/travel-policies'
+      preLoaderRoute: typeof TravelPoliciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trips': {
+      id: '/trips'
+      path: '/trips'
+      fullPath: '/trips'
+      preLoaderRoute: typeof TripsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/flights/': {
@@ -217,8 +377,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AllNotificationsRoute: AllNotificationsRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
+  MyProfileRoute: MyProfileRoute,
+  MyTripsRoute: MyTripsRoute,
+  NotificationsRoute: NotificationsRoute,
+  PoliciesRoute: PoliciesRoute,
+  ProfileRoute: ProfileRoute,
+  TravelPoliciesRoute: TravelPoliciesRoute,
+  TripsRoute: TripsRoute,
   FlightsBookRoute: FlightsBookRoute,
   FlightsResultsRoute: FlightsResultsRoute,
   HotelsBookRoute: HotelsBookRoute,
