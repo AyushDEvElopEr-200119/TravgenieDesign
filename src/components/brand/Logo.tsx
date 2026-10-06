@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import travgenieLogo from "@/assets/travgenie-logo.png";
 
 type LogoProps = {
   width?: number;
@@ -41,40 +42,16 @@ export function GenieMark({
 }
 
 export function Logo({ width = 140, tone = "navy", className }: LogoProps) {
-  const color = tone === "white" ? "#FFFFFF" : "#0B1730";
-  const baseSize = width * 0.115;
-
   return (
-    <span
-      className={cn("inline-flex items-baseline leading-none whitespace-nowrap", className)}
-      style={{ fontFamily: "var(--font-sans)" }}
-      aria-label="TravGenie.com"
-    >
-      <span
-        className="relative inline-flex items-baseline font-bold tracking-[-0.02em] whitespace-nowrap"
-        style={{ color, fontSize: `${baseSize}px` }}
-      >
-        <span>TRAV</span>
-        <GenieMark
-          gradientId={`genie-${tone}-${width}`}
-          className="relative shrink-0 self-center"
-          style={
-            {
-              width: `${baseSize * 0.65}px`,
-              height: `${baseSize * 0.95}px`,
-              marginInline: "1px",
-              marginBottom: "-2px",
-            } as React.CSSProperties
-          }
-        />
-        <span>GENIE</span>
-        <span
-          className="font-medium opacity-90 ml-0.5"
-          style={{ color, fontSize: `${baseSize * 0.62}px` }}
-        >
-          .com
-        </span>
-      </span>
-    </span>
+    <img
+      src={travgenieLogo}
+      alt="TravGenie.com"
+      className={cn(
+        "inline-block h-auto max-w-full",
+        tone === "white" ? "invert mix-blend-screen" : "mix-blend-multiply",
+        className,
+      )}
+      style={{ width: `${width}px` }}
+    />
   );
 }
