@@ -4,7 +4,7 @@ import { ArrowRight, BadgeCheck, Mail } from "lucide-react";
 import dubaiSkyline from "@/assets/dubai-skyline.jpg";
 import skyClouds from "@/assets/sky-clouds.jpg";
 import genieGold from "@/assets/genie-gold.png";
-import cwsLogo from "@/assets/cws-logo-updated.jpg";
+import cwsLogo from "@/assets/cws-logo-replacement.png";
 import { Logo } from "@/components/brand/Logo";
 import { Button, TextInput } from "@/components/ui/primitives";
 import { cn } from "@/lib/utils";
