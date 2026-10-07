@@ -3,7 +3,9 @@ import { useState } from "react";
 import { ArrowRight, BadgeCheck, Mail } from "lucide-react";
 import dubaiSkyline from "@/assets/dubai-skyline.jpg";
 import skyClouds from "@/assets/sky-clouds.jpg";
-import { GenieMark, Logo } from "@/components/brand/Logo";
+import genieGold from "@/assets/genie-gold.png";
+import cwsLogo from "@/assets/cws-logo-replacement.png";
+import { Logo } from "@/components/brand/Logo";
 import { Button, TextInput } from "@/components/ui/primitives";
 import { cn } from "@/lib/utils";
 
@@ -39,30 +41,11 @@ function CwsBlock({ className }: { className?: string }) {
         A PRODUCT BY
       </span>
       <span className="h-8 w-px bg-border" />
-      <span className="flex items-center gap-2">
-        <svg viewBox="0 0 40 40" className="size-8">
-          <defs>
-            <linearGradient id="cws-globe" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#E0B45C" />
-              <stop offset="100%" stopColor="#A8741A" />
-            </linearGradient>
-          </defs>
-          <circle cx="20" cy="20" r="17" fill="url(#cws-globe)" />
-          <g fill="none" stroke="#fff" strokeWidth="1.2" opacity="0.85">
-            <ellipse cx="20" cy="20" rx="17" ry="7" />
-            <ellipse cx="20" cy="20" rx="7" ry="17" />
-            <path d="M3 20h34" />
-          </g>
-        </svg>
-        <span className="leading-none">
-          <span className="block text-[20px] font-extrabold tracking-tight text-navy">
-            CWS
-          </span>
-          <span className="block text-[7px] font-bold tracking-[0.1em] text-navy">
-            GROUP OF COMPANIES
-          </span>
-        </span>
-      </span>
+      <img
+        src={cwsLogo}
+        alt="CWS Group of Companies"
+        className="h-16 w-20 object-contain sm:h-[72px] sm:w-[90px]"
+      />
     </div>
   );
 }
@@ -78,15 +61,9 @@ function LoginPage() {
 
   const sendOtp = () => {
     const ok =
-      mode === "email"
-        ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-        : /^[A-Za-z0-9]{4,}$/.test(value);
+      mode === "email" ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) : /^[A-Za-z0-9]{4,}$/.test(value);
     if (!ok) {
-      setError(
-        mode === "email"
-          ? "Enter a valid email ID"
-          : "Enter a valid employee number",
-      );
+      setError(mode === "email" ? "Enter a valid email ID" : "Enter a valid employee number");
       return;
     }
     setError(null);
@@ -98,7 +75,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-cream">
+    <div className="relative min-h-screen overflow-hidden bg-[#F5F3F0] p-2 sm:p-4">
       {/* layered cream waves */}
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full"
@@ -118,20 +95,20 @@ function LoginPage() {
         />
       </svg>
 
-      <div className="relative grid min-h-screen lg:grid-cols-[46%_54%]">
+      <div className="relative grid min-h-[calc(100vh-1rem)] overflow-hidden rounded-sm border border-[#E5E1DC] bg-[#FCFAF7] shadow-[0_2px_12px_rgba(25,35,55,0.06)] sm:min-h-[calc(100vh-2rem)] lg:grid-cols-[43%_57%]">
         {/* ---------------------------------------------------------- form */}
-        <div className="relative flex flex-col justify-center px-6 py-12 sm:px-12 lg:pl-[100px]">
-          <div className="w-full max-w-[450px]">
-            <Logo width={330} />
+        <div className="relative z-10 flex flex-col justify-center px-6 py-10 sm:px-12 lg:pl-[clamp(48px,7vw,96px)] lg:pr-8">
+          <div className="w-full max-w-[420px] lg:translate-y-8">
+            <Logo width={350} />
 
-            <p className="mt-8 text-[28px] font-normal text-navy">Welcome to</p>
-            <h1 className="mt-1 text-[46px] leading-[1.1] font-bold text-navy">
+            <p className="mt-7 text-[27px] font-normal text-navy lg:mt-[38px]">Welcome to</p>
+            <h1 className="mt-0.5 text-[44px] leading-[1.02] font-bold tracking-[-0.035em] text-navy sm:text-[46px]">
               Smarter
               <br />
               Business Travel
             </h1>
 
-            <div className="mt-9 grid h-12 grid-cols-2 overflow-hidden rounded-md">
+            <div className="mt-7 grid h-[46px] grid-cols-2 overflow-hidden rounded-md">
               {(
                 [
                   ["email", "Email ID"],
@@ -146,7 +123,7 @@ function LoginPage() {
                     setError(null);
                   }}
                   className={cn(
-                    "text-[15px] transition-colors duration-150",
+                    "text-[14px] transition-colors duration-150",
                     mode === key
                       ? "bg-gold-100 font-medium text-gold-700"
                       : "bg-muted text-secondary-foreground hover:text-foreground",
@@ -158,21 +135,15 @@ function LoginPage() {
             </div>
 
             <TextInput
-              className="mt-4"
+              className="mt-4 h-[54px]"
               invalid={!!error}
               leading={mode === "email" ? <Mail /> : <BadgeCheck />}
-              placeholder={
-                mode === "email"
-                  ? "Enter your email ID"
-                  : "Enter your employee number"
-              }
+              placeholder={mode === "email" ? "Enter your email ID" : "Enter your employee number"}
               value={value}
               onChange={(e) => setValue(e.target.value)}
               aria-label={mode === "email" ? "Email ID" : "Employee number"}
             />
-            {error ? (
-              <p className="mt-1 text-xs text-destructive">{error}</p>
-            ) : null}
+            {error ? <p className="mt-1 text-xs text-destructive">{error}</p> : null}
 
             {otpSent ? (
               <div className="mt-4">
@@ -201,11 +172,7 @@ function LoginPage() {
 
             {otpSent ? (
               <Link to="/dashboard" className="mt-4 block">
-                <Button
-                  size="lg"
-                  className="w-full"
-                  icon={<ArrowRight className="size-5" />}
-                >
+                <Button size="lg" className="w-full" icon={<ArrowRight className="size-5" />}>
                   Verify &amp; Continue
                 </Button>
               </Link>
@@ -214,67 +181,92 @@ function LoginPage() {
                 size="lg"
                 loading={loading}
                 onClick={sendOtp}
-                className="mt-4 w-full"
+                className="mt-5 h-[54px] w-full rounded-md"
                 icon={<ArrowRight className="size-5" />}
               >
                 Send OTP
               </Button>
             )}
 
-            <p className="mt-4 text-sm text-foreground">
+            <p className="mt-7 text-[13px] text-foreground">
               Need help?{" "}
-              <button className="font-medium text-link hover:underline">
-                Contact Support
-              </button>
+              <button className="font-medium text-link hover:underline">Contact Support</button>
             </p>
 
-            {variant === "dubai" ? (
-              <CwsBlock className="mt-16 justify-end" />
-            ) : null}
+            {variant === "dubai" ? <CwsBlock className="mt-16 justify-end" /> : null}
           </div>
         </div>
 
         {/* --------------------------------------------------------- photo */}
-        <div className="relative hidden min-h-[520px] lg:block">
+        <div className="relative hidden min-h-[calc(100vh-2rem)] lg:block">
           <svg className="absolute size-0" aria-hidden="true">
             <clipPath id="login-wave" clipPathUnits="objectBoundingBox">
               <path d="M0.1 0C0.02 0.16 0.13 0.3 0.1 0.45 0.07 0.62 -0.03 0.74 0.05 0.9 0.09 0.97 0.1 0.99 0.1 1H1V0z" />
             </clipPath>
           </svg>
-          <div
-            className="absolute inset-0"
-            style={{ clipPath: "url(#login-wave)" }}
-          >
+          <div className="absolute inset-0" style={{ clipPath: "url(#login-wave)" }}>
             <img
               src={variant === "dubai" ? dubaiSkyline : skyClouds}
               alt=""
-              className="size-full object-cover"
+              className="size-full object-cover object-center"
             />
             {variant === "dubai" ? (
               <>
-                <GenieMark
-                  gradientId="login-genie"
-                  className="absolute top-1/2 right-[8%] h-[52%] -translate-y-1/2 opacity-90 drop-shadow-[0_10px_30px_rgba(120,80,10,0.35)]"
+                <img
+                  src={genieGold}
+                  alt=""
+                  className="absolute top-1/2 right-[8%] h-[52%] -translate-y-1/2 object-contain opacity-95 drop-shadow-[0_10px_30px_rgba(120,80,10,0.35)]"
                 />
                 <div className="absolute right-12 bottom-14 text-right">
                   <p className="text-2xl font-light text-white">Travel for</p>
-                  <p className="text-[32px] font-bold text-white">
-                    a Bigger Tomorrow
-                  </p>
+                  <p className="text-[32px] font-bold text-white">a Bigger Tomorrow</p>
                   <span className="mt-4 ml-auto block h-1 w-[70px] bg-gold-500" />
                 </div>
               </>
             ) : (
-              <GenieMark
-                gradientId="login-genie-sky"
-                className="absolute top-1/2 right-[14%] h-[300px] -translate-y-[55%] opacity-95 drop-shadow-[0_10px_30px_rgba(120,80,10,0.3)]"
-              />
+              <>
+                <svg
+                  viewBox="0 0 900 700"
+                  preserveAspectRatio="none"
+                  className="absolute inset-0 size-full"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <linearGradient id="login-gold-trail" x1="0" y1="1" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#F5D687" stopOpacity="0" />
+                      <stop offset="48%" stopColor="#FFE9A6" stopOpacity="0.86" />
+                      <stop offset="100%" stopColor="#FFF4CF" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M-25 450C130 355 250 490 390 394S660 300 925 400"
+                    fill="none"
+                    stroke="url(#login-gold-trail)"
+                    strokeWidth="9"
+                  />
+                  <path
+                    d="M-35 490C125 400 255 525 410 430S680 340 940 442"
+                    fill="none"
+                    stroke="url(#login-gold-trail)"
+                    strokeWidth="4"
+                  />
+                  <path
+                    d="M-20 530C135 440 270 555 430 468S690 390 930 480"
+                    fill="none"
+                    stroke="url(#login-gold-trail)"
+                    strokeWidth="2"
+                  />
+                </svg>
+                <img
+                  src={genieGold}
+                  alt=""
+                  className="absolute top-[47%] right-[7%] h-[min(58%,410px)] -translate-y-1/2 object-contain opacity-95 drop-shadow-[0_10px_30px_rgba(120,80,10,0.3)]"
+                />
+              </>
             )}
           </div>
 
-          {variant === "sky" ? (
-            <CwsBlock className="absolute right-10 bottom-8 z-10" />
-          ) : null}
+          {variant === "sky" ? <CwsBlock className="absolute right-10 bottom-8 z-10" /> : null}
         </div>
       </div>
     </div>
