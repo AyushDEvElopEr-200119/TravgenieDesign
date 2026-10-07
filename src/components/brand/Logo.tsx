@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import travgenieLogo from "@/assets/travgenie-logo.png";
+import travgenieLogoWhite from "@/assets/travgenie-logo-white.png";
 
 type LogoProps = {
   width?: number;
@@ -44,11 +45,11 @@ export function GenieMark({
 export function Logo({ width = 140, tone = "navy", className }: LogoProps) {
   return (
     <img
-      src={travgenieLogo}
+      src={tone === "white" ? travgenieLogoWhite : travgenieLogo}
       alt="TravGenie.com"
       className={cn(
         "inline-block h-auto max-w-full",
-        tone === "white" ? "invert mix-blend-screen" : "mix-blend-multiply",
+        tone === "white" ? "mix-blend-screen" : "mix-blend-multiply",
         className,
       )}
       style={{ width: `${width}px` }}
