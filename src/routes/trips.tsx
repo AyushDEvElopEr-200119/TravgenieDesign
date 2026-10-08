@@ -1115,11 +1115,6 @@ function FlightVoucher({
     <>
       <header className="flex items-center justify-between gap-3 border-b border-[#E7ECF3] px-4 py-2.5 sm:px-8">
         <Logo width={205} />
-        <p className="text-right text-[9px] leading-relaxed text-[#52647E] sm:text-[10px]">
-          A product by
-          <br />
-          <strong>Misba Travel World</strong>
-        </p>
       </header>
 
       <section className="relative flex min-h-[135px] items-center overflow-hidden bg-[#143565] px-5 py-4 sm:min-h-[160px] sm:px-8">
@@ -1463,11 +1458,6 @@ function FlightVoucher({
         <footer className="flex items-center justify-between gap-2 bg-[#102B55] px-4 py-2.5 text-white">
           <Logo width={175} tone="white" />
           <p className="text-center text-[9px] text-white/85">Corporate Travel Made Simple</p>
-          <p className="text-right text-[8px] leading-tight text-white/80">
-            A product by
-            <br />
-            <strong>Misba Travel World</strong>
-          </p>
         </footer>
       </div>
     </>
@@ -1565,11 +1555,6 @@ function HotelVoucher({ trip }: { trip: TripItem }) {
       <header className="flex items-center justify-between gap-3 border-b border-[#D8E2F0] px-4 py-3 sm:px-8">
         <Logo width={190} />
         <div className="flex items-center gap-3">
-          <p className="hidden text-right text-[9px] leading-relaxed text-[#52647E] sm:block">
-            A product by
-            <br />
-            <strong>Misba Travel World</strong>
-          </p>
           <div className="flex items-center gap-2 rounded-l-lg bg-[#153765] px-3 py-2 text-white sm:px-5">
             <Hotel className="size-5 shrink-0" />
             <div>
@@ -1898,9 +1883,9 @@ function HotelVoucher({ trip }: { trip: TripItem }) {
             Corporate Travel Made Simple
           </p>
           <p className="text-right text-[9px] leading-relaxed text-white/80">
-            A product by
+            Hotel voucher reference
             <br />
-            <strong className="text-white">Misba Travel World</strong>
+            <strong className="text-white">{voucherReference}</strong>
           </p>
         </footer>
       </div>

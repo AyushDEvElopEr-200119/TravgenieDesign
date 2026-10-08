@@ -10,8 +10,6 @@ import {
   ArrowRight,
   ShieldCheck,
   TicketCheck,
-  ChevronDown,
-  Check,
   FileText,
   Edit3,
   X,
@@ -214,11 +212,8 @@ const policyCards: PolicyCardData[] = [
   },
 ];
 
-const companies = ["DCB Bank", "TravGenie Global", "CWS Group", "Acme Enterprise"];
-
 export function PoliciesPage() {
-  const [selectedCompany, setSelectedCompany] = useState("DCB Bank");
-  const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
+  const selectedCompany = "DCB Bank";
   const [activeModalPolicy, setActiveModalPolicy] = useState<PolicyCardData | null>(null);
   const [isPolicyChangeOpen, setIsPolicyChangeOpen] = useState(false);
   const [policyChangeSuccess, setPolicyChangeSuccess] = useState(false);
@@ -234,7 +229,7 @@ export function PoliciesPage() {
         [
           `TRAVGENIE CORPORATE TRAVEL POLICY\nCompany: ${selectedCompany}\nEffective Date: 2026\nCompliance Threshold: 92%\n\n1. Flight Policy: Contracted partners, Lowest Logical Fare, economy default.\n2. Hotel Policy: 3-4 star preferred properties, USD 280/night cap.\n3. Class-wise Policy: Economy < 6h, Business > 8h with VP approval.\n4. Advance Booking: Bookings up to 30 days in advance.`,
         ],
-        { type: "text/plain" }
+        { type: "text/plain" },
       );
       element.href = URL.createObjectURL(file);
       element.download = `${selectedCompany.replace(/\s+/g, "_")}_Travel_Policy.txt`;
@@ -336,11 +331,17 @@ export function PoliciesPage() {
             <Hotel className="size-3.5" />
             <span>Hotel</span>
           </Link>
-          <button onClick={() => alert("Train bookings coming soon!")} className="flex items-center gap-1.5 py-1 px-2 text-[#475569]">
+          <button
+            onClick={() => alert("Train bookings coming soon!")}
+            className="flex items-center gap-1.5 py-1 px-2 text-[#475569]"
+          >
             <TramFront className="size-3.5" />
             <span>Train</span>
           </button>
-          <button onClick={() => alert("Bus bookings coming soon!")} className="flex items-center gap-1.5 py-1 px-2 text-[#475569]">
+          <button
+            onClick={() => alert("Bus bookings coming soon!")}
+            className="flex items-center gap-1.5 py-1 px-2 text-[#475569]"
+          >
             <Bus className="size-3.5" />
             <span>Bus</span>
           </button>
@@ -371,44 +372,6 @@ export function PoliciesPage() {
               Guidelines for a compliant and cost-efficient travel experience.
             </p>
           </div>
-
-          {/* Right: Company Dropdown Selector */}
-          <div className="hidden sm:flex flex-col items-start gap-1 relative z-20 animate-in fade-in slide-in-from-right-4 duration-600">
-            <span className="text-[12.5px] font-medium text-white/85 tracking-wide">Company</span>
-            <div className="relative">
-              <button
-                onClick={() => setIsCompanyDropdownOpen(!isCompanyDropdownOpen)}
-                className="flex h-11 min-w-[200px] items-center justify-between gap-6 rounded-xl bg-white px-4 py-2 text-[15px] font-bold text-[#0D1B3E] shadow-lg transition-all hover:bg-[#FAF8F5] active:scale-98 cursor-pointer"
-              >
-                <span>{selectedCompany}</span>
-                <ChevronDown className={cn("size-4 text-[#5B6478] transition-transform duration-200", isCompanyDropdownOpen && "rotate-180")} />
-              </button>
-
-              {/* Company Dropdown Menu */}
-              {isCompanyDropdownOpen && (
-                <div className="absolute top-full mt-1.5 right-0 w-[220px] rounded-xl bg-white p-1.5 shadow-xl border border-[#EDE8E1] z-30 animate-in fade-in zoom-in-95 duration-150">
-                  {companies.map((comp) => (
-                    <button
-                      key={comp}
-                      onClick={() => {
-                        setSelectedCompany(comp);
-                        setIsCompanyDropdownOpen(false);
-                      }}
-                      className={cn(
-                        "flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[14px] transition-colors cursor-pointer",
-                        selectedCompany === comp
-                          ? "bg-[#FEF8ED] font-bold text-[#8A5A12]"
-                          : "text-[#0D1B3E] hover:bg-[#F3F5F8]",
-                      )}
-                    >
-                      <span>{comp}</span>
-                      {selectedCompany === comp && <Check className="size-4 text-[#C9963B]" />}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
         </div>
       </section>
 
@@ -417,19 +380,6 @@ export function PoliciesPage() {
         <div className="mx-auto max-w-[1300px]">
           {/* Overlapping White Shell */}
           <div className="rounded-t-[26px] sm:rounded-t-[30px] bg-white border border-[#EDE8E1] shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-5 sm:p-7 md:p-8 space-y-6">
-            
-            {/* Mobile Company Selector */}
-            <div className="sm:hidden bg-[#FAF8F5] p-3.5 rounded-2xl border border-[#EDE8E1] shadow-2xs flex items-center justify-between">
-              <span className="text-[13px] font-semibold text-[#5B6478]">Company:</span>
-              <button
-                onClick={() => setIsCompanyDropdownOpen(!isCompanyDropdownOpen)}
-                className="flex items-center gap-2 text-[14.5px] font-bold text-[#0D1B3E] cursor-pointer"
-              >
-                <span>{selectedCompany}</span>
-                <ChevronDown className="size-4 text-[#5B6478]" />
-              </button>
-            </div>
-
             {/* 6 POLICY CARDS GRID */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {policyCards.map((card, idx) => {
@@ -443,7 +393,12 @@ export function PoliciesPage() {
                     <div>
                       {/* Icon inside Warm Golden Circle */}
                       <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FEF6E9] border border-[#FBE3B5] text-[#C48C2B] shadow-2xs transition-transform duration-300 group-hover:scale-110 group-hover:bg-[#FDF0D5]">
-                        <Icon className={cn("size-6 text-[#C48C2B]", card.id === "flight" && "-rotate-45")} />
+                        <Icon
+                          className={cn(
+                            "size-6 text-[#C48C2B]",
+                            card.id === "flight" && "-rotate-45",
+                          )}
+                        />
                       </div>
 
                       {/* Title & Subtitle */}
@@ -547,7 +502,9 @@ export function PoliciesPage() {
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2.5">
                         <span className="size-3 rounded-full bg-[#20A159]" />
-                        <span className="text-[14.5px] font-medium text-[#0D1B3E]">Within Policy</span>
+                        <span className="text-[14.5px] font-medium text-[#0D1B3E]">
+                          Within Policy
+                        </span>
                       </div>
                       <span className="text-[15px] font-bold text-[#0D1B3E]">42</span>
                     </div>
@@ -556,7 +513,9 @@ export function PoliciesPage() {
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2.5">
                         <span className="size-3 rounded-full bg-[#F08A24]" />
-                        <span className="text-[14.5px] font-medium text-[#0D1B3E]">Needs Approval</span>
+                        <span className="text-[14.5px] font-medium text-[#0D1B3E]">
+                          Needs Approval
+                        </span>
                       </div>
                       <span className="text-[15px] font-bold text-[#0D1B3E]">5</span>
                     </div>
@@ -565,7 +524,9 @@ export function PoliciesPage() {
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2.5">
                         <span className="size-3 rounded-full bg-[#E5382E]" />
-                        <span className="text-[14.5px] font-medium text-[#0D1B3E]">Out of Policy</span>
+                        <span className="text-[14.5px] font-medium text-[#0D1B3E]">
+                          Out of Policy
+                        </span>
                       </div>
                       <span className="text-[15px] font-bold text-[#0D1B3E]">1</span>
                     </div>
@@ -647,7 +608,9 @@ export function PoliciesPage() {
       {policyChangeSuccess && (
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-xl bg-[#1FA45B] px-5 py-3.5 text-white shadow-xl animate-in slide-in-from-bottom-5 duration-300">
           <CheckCircle2 className="size-5" />
-          <span className="text-[14px] font-medium">Policy change request submitted to HR & Travel Desk!</span>
+          <span className="text-[14px] font-medium">
+            Policy change request submitted to HR & Travel Desk!
+          </span>
         </div>
       )}
     </div>
@@ -684,7 +647,9 @@ function PolicyDetailModal({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-[20px] sm:text-[22px] font-bold text-[#0D1B3E]">{policy.title}</h2>
+              <h2 className="text-[20px] sm:text-[22px] font-bold text-[#0D1B3E]">
+                {policy.title}
+              </h2>
               <span className="rounded-md bg-[#FEF8ED] px-2.5 py-0.5 text-[12px] font-semibold text-[#8A5A12] border border-[#FBE6C4]">
                 {company}
               </span>
@@ -697,8 +662,12 @@ function PolicyDetailModal({
         <div className="mt-6 space-y-6">
           {/* Overview */}
           <div className="rounded-xl bg-[#FAF8F5] p-4 border border-[#ECE6DC]">
-            <h3 className="text-[13px] font-bold text-[#0D1B3E] uppercase tracking-wider">Policy Overview</h3>
-            <p className="mt-1.5 text-[14px] leading-relaxed text-[#5B6478]">{policy.details.overview}</p>
+            <h3 className="text-[13px] font-bold text-[#0D1B3E] uppercase tracking-wider">
+              Policy Overview
+            </h3>
+            <p className="mt-1.5 text-[14px] leading-relaxed text-[#5B6478]">
+              {policy.details.overview}
+            </p>
           </div>
 
           {/* Core Rules */}
@@ -721,7 +690,9 @@ function PolicyDetailModal({
               {policy.details.limits.map((lim, i) => (
                 <div key={i} className="rounded-xl border border-[#EDE8E1] p-3 bg-[#FCFBF8]">
                   <span className="text-[11.5px] text-[#8A93A6] block">{lim.label}</span>
-                  <span className="text-[14px] font-bold text-[#0D1B3E] block mt-0.5">{lim.value}</span>
+                  <span className="text-[14px] font-bold text-[#0D1B3E] block mt-0.5">
+                    {lim.value}
+                  </span>
                 </div>
               ))}
             </div>
@@ -788,12 +759,15 @@ function RequestPolicyChangeModal({
 
         <h2 className="text-[20px] font-bold text-[#0D1B3E]">Request Policy Exception / Change</h2>
         <p className="mt-1 text-[13px] text-[#5B6478]">
-          Submit a request to update limits for <span className="font-semibold text-[#0D1B3E]">{company}</span>.
+          Submit a request to update limits for{" "}
+          <span className="font-semibold text-[#0D1B3E]">{company}</span>.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           <div>
-            <label className="block text-[13px] font-semibold text-[#0D1B3E] mb-1">Policy Category</label>
+            <label className="block text-[13px] font-semibold text-[#0D1B3E] mb-1">
+              Policy Category
+            </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -808,7 +782,9 @@ function RequestPolicyChangeModal({
           </div>
 
           <div>
-            <label className="block text-[13px] font-semibold text-[#0D1B3E] mb-1">Business Justification</label>
+            <label className="block text-[13px] font-semibold text-[#0D1B3E] mb-1">
+              Business Justification
+            </label>
             <textarea
               rows={3}
               required
