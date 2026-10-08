@@ -113,10 +113,6 @@ function FlightSearchPage() {
           <button className="flex items-center gap-2 text-[15px] text-secondary-foreground hover:text-foreground">
             Travel Policy <Info className="size-4" />
           </button>
-          <span className="h-7 w-px bg-border" />
-          <button className="flex items-center gap-2 text-[16px] font-semibold">
-            DCB Bank <ChevronDown className="size-4" />
-          </button>
         </div>
       </div>
 

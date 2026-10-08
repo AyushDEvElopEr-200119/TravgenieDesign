@@ -327,7 +327,6 @@ function HotelBookPage() {
               <h2 className="text-[19px] font-bold">Payment Method</h2>
               <div role="radiogroup" aria-label="Payment method" className="mt-3">
                 {[
-                  ["company", "Company Account (DCB Bank)"],
                   ["card", "Personal Card"],
                   ["corporate", "Corporate Credit Card"],
                   ["hold", "Hold Booking (Pay Later)"],
