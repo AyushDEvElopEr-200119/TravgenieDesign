@@ -4,7 +4,6 @@ import { ArrowRight, BadgeCheck, Mail } from "lucide-react";
 import dubaiSkyline from "@/assets/dubai-skyline.jpg";
 import skyClouds from "@/assets/sky-clouds.jpg";
 import genieGold from "@/assets/genie-gold.png";
-import cwsLogo from "@/assets/cws-logo-replacement.png";
 import { Logo } from "@/components/brand/Logo";
 import { Button, TextInput } from "@/components/ui/primitives";
 import { cn } from "@/lib/utils";
@@ -33,22 +32,6 @@ export const Route = createFileRoute("/login")({
   }),
   component: LoginPage,
 });
-
-function CwsBlock({ className }: { className?: string }) {
-  return (
-    <div className={cn("flex items-center gap-4", className)}>
-      <span className="text-[11px] font-medium tracking-[0.18em] text-secondary-foreground">
-        A PRODUCT BY
-      </span>
-      <span className="h-8 w-px bg-border" />
-      <img
-        src={cwsLogo}
-        alt="CWS Group of Companies"
-        className="h-16 w-20 object-contain sm:h-[72px] sm:w-[90px]"
-      />
-    </div>
-  );
-}
 
 function LoginPage() {
   const { variant } = Route.useSearch();
@@ -95,7 +78,7 @@ function LoginPage() {
         />
       </svg>
 
-      <div className="relative grid min-h-[calc(100vh-1rem)] overflow-hidden rounded-sm border border-[#E5E1DC] bg-[#FCFAF7] shadow-[0_2px_12px_rgba(25,35,55,0.06)] sm:min-h-[calc(100vh-2rem)] lg:grid-cols-[43%_57%]">
+      <div className="relative grid min-h-[calc(100vh-1rem)] overflow-hidden rounded-sm border border-[#E5E1DC] bg-[#FCFAF7] shadow-[0_2px_12px_rgba(25,35,55,0.06)] sm:min-h-[calc(100vh-2rem)] lg:grid-cols-[minmax(0,0.93fr)_minmax(0,1.07fr)]">
         {/* ---------------------------------------------------------- form */}
         <div className="relative z-10 flex flex-col justify-center px-6 py-10 sm:px-12 lg:pl-[clamp(48px,7vw,96px)] lg:pr-8">
           <div className="w-full max-w-[420px] lg:translate-y-8">
@@ -192,8 +175,6 @@ function LoginPage() {
               Need help?{" "}
               <button className="font-medium text-link hover:underline">Contact Support</button>
             </p>
-
-            {variant === "dubai" ? <CwsBlock className="mt-16 justify-end" /> : null}
           </div>
         </div>
 
@@ -265,8 +246,6 @@ function LoginPage() {
               </>
             )}
           </div>
-
-          {variant === "sky" ? <CwsBlock className="absolute right-10 bottom-8 z-10" /> : null}
         </div>
       </div>
     </div>
